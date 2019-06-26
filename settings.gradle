@@ -1,0 +1,2 @@
+include ':androidutil'
+rootProject.name='AndroidUtil'
