@@ -41,7 +41,7 @@ class VolatileObject<T>(
 
     val isDirty : Boolean get() = dirty
 
-    val value: T?  @Synchronized get() {
+    val value: T  @Synchronized get() {
         val currentT = this.t
 
         if (dirty || currentT == null) {
@@ -54,7 +54,7 @@ class VolatileObject<T>(
                 if (updater.invoke(t)){
                     dirty = false
                     this.t = t
-                } else return null // failed to update
+                } else return t // failed to update
             }
             return t
         }
