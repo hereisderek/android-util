@@ -1,4 +1,4 @@
-package com.github.hereisderek.androidutil.util.`object`
+package com.github.hereisderek.androidutil.util.obj
 
 import android.os.Build
 import android.util.ArrayMap
