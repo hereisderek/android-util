@@ -57,7 +57,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
-task classesJar(type: Aar) {
+task classesJar(type: Jar) {
     from "$buildDir/intermediates/classes/release"
 }
 
