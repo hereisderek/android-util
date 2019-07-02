@@ -2,14 +2,18 @@ package com.github.hereisderek.androidutil.util.flag
 
 import java.util.concurrent.atomic.AtomicInteger
 
-inline class Flag(val flag: Int) {
+inline class Flag(val value: Int) {
     constructor(vararg flags: Int) : this(sum(*flags))
     constructor(flags: List<Int>) : this(sum(flags))
 
 
-    fun hasFlag(flag: Int) = flag and this.flag == flag
-    fun withFlag(flag: Int) = this.flag or flag
-    fun minusFlag(flag: Int) = this.flag and flag.inv()
+    fun hasFlag(flag: Flag) = flag.value and this.value == flag.value
+    fun withFlag(flag: Flag) = this.value or flag.value
+    fun minusFlag(flag: Flag) = this.value and flag.value.inv()
+
+    fun hasFlag(flag: Int) = flag and this.value == flag
+    fun withFlag(flag: Int) = this.value or flag
+    fun minusFlag(flag: Int) = this.value and flag.inv()
 
     operator fun minus(flag: Int) = minusFlag(flag)
 
