@@ -1,4 +1,4 @@
-package com.github.hereisderek.androidutil
+package com.github.hereisderek.androidutil.util
 
 import java.lang.ref.WeakReference
 

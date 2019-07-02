@@ -12,6 +12,7 @@ import android.os.Looper
  * Project: AndroidUtil
  */
 
+inline val SDK_INT : Int get() = android.os.Build.VERSION.SDK_INT
 
 /**
  * execute pre block and post block respectively before/after the execution of @param block
@@ -82,5 +83,3 @@ inline class TimedResult<T>(val timedResult: Pair<Long, T>) {
     val time get() = timedResult.first
     val result get() = timedResult.second
 }
-
-object Util{}

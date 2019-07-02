@@ -23,6 +23,10 @@ android {
         }
     }
 
+    kotlinOptions {
+        freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
+    }
+
 }
 
 dependencies {
@@ -66,3 +70,8 @@ artifacts {
     archives javadocJar
     archives sourcesJar
 }
+//compileKotlin {
+//    kotlinOptions {
+//        freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
+//    }
+//}

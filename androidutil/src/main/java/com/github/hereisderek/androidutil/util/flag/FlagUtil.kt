@@ -1,4 +1,6 @@
-package com.github.hereisderek.androidutil.util
+@file:Suppress("MemberVisibilityCanBePrivate")
+
+package com.github.hereisderek.androidutil.util.flag
 
 import kotlin.experimental.and
 import kotlin.experimental.inv
@@ -21,3 +23,4 @@ object FlagUtil {
     inline fun Byte.withFlag(flag: Byte) = this or flag
     inline fun Byte.minusFlag(flag: Byte) = this and flag.inv()
 }
+
