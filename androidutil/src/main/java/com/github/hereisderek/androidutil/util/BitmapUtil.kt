@@ -23,7 +23,6 @@ import kotlinx.coroutines.CancellationException
 import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-import com.sun.tools.corba.se.idl.Util.getAbsolutePath
 import java.io.File
 
 
@@ -110,7 +109,7 @@ object BitmapUtil {
     }
 
 
-    fun getThumbnailUriForUri(context: Context, uris: List<Uri>, kind: Int) : List<Uri> {
+    /*fun getThumbnailUriForUri(context: Context, uris: List<Uri>, kind: Int) : List<Uri> {
         // MediaStore.Images.Thumbnails.queryMiniThumbnails(context.contentResolver, uri, kind, )
     }
 
@@ -119,9 +118,9 @@ object BitmapUtil {
             it.moveToFirst()
 
         }
-    }
+    }*/
 
-    fun getContentUri(context: Context, imageFile: File): Uri {
+    /*fun getContentUri(context: Context, imageFile: File): Uri {
         val filePath = imageFile.getAbsolutePath()
         val cursor = context.contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -135,7 +134,7 @@ object BitmapUtil {
             val baseUri = Uri.parse("content://media/external/audio/media")
             return Uri.withAppendedPath(baseUri, "" + id)
         }
-    }
+    }*/
 
 
     // fun createThumbnail() {
@@ -172,7 +171,7 @@ object BitmapUtil {
     suspend fun uriToContentUri(context: Context, uri: Uri) : Uri {
         return if (uri.uriType == UriUtil.UriType.FileUri && !uri.path.isNullOrEmpty()) suspendCoroutine {
             MediaScannerConnection.scanFile(context, arrayOf(uri.path), null) { path, uri ->
-                if (uri == null) { Timber.e("unable to scan image, uri is null. image path:${uri.path}") }
+                // if (uri == null) { Timber.e("unable to scan image, uri is null. image path:${uri.path}") }
                 it.resume(uri)
             }
         } else uri
@@ -271,7 +270,36 @@ object BitmapUtil {
 
 
     /// get random images
+    fun getImagesUriFromStorage(
+        context: Context,
+        size: Int,
+        skip: Int = 0,
+        sortOrder: String = SortOrder.DATE_DEC.value,
+        uriType: UriUtil.UriType = UriUtil.UriType.ContentUri) : ArrayList<Uri> {
 
+        val columns = IMAGE_PROJECTION
+        val cursor = context.contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            columns, null, null, sortOrder
+        )
+        val result = ArrayList<Uri>()
+        cursor?.use {cursor ->
+            if (cursor.moveToPosition(skip)) {
+                for (i in 0 until size) {
+                    val imageContentUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID)))
+
+                    val filePath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA))
+                    val imageFileUri = Uri.fromFile(File(filePath))
+
+                    result.add(if (uriType == UriUtil.UriType.ContentUri) imageContentUri else imageFileUri )
+
+                    if (cursor.isLast || !cursor.moveToNext()) break
+                }
+            }
+        }
+        return result
+    }
 
 
 }
