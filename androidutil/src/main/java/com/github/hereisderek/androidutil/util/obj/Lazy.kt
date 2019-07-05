@@ -3,7 +3,6 @@
 package com.github.hereisderek.androidutil.util.obj
 
 import kotlinx.serialization.Serializable
-import timber.log.Timber
 
 /**
  *
@@ -50,11 +49,6 @@ interface Lazy1<out T, Param> {
     fun get(param: Param) : T
 }
 
-
-// enum class Lazy1ThreadSafetyMode{
-//     SYNCHRONIZED,
-//     NONE,
-// }
 
 @Serializable
 class UnsafeLazy1Impl<out T, Param>(initializer: (a: Param) -> T) : Lazy1<T, Param> {
@@ -125,7 +119,9 @@ interface Lazy2<out T, Param1, Param2> {
     fun get(param1: Param1, param2: Param2) : T
 }
 
-class UnsafeLazy2Impl<T, Param1, Param2>(initializer: (param1: Param1, param2: Param2) -> T) : Lazy2<T, Param1, Param2> {
+class UnsafeLazy2Impl<T, Param1, Param2>(
+    initializer: (param1: Param1, param2: Param2) -> T
+) : Lazy2<T, Param1, Param2> {
     private var initializer: ((param1: Param1, param2: Param2) -> T)? = initializer
     private var _value: Any? = UNINITIALIZED_VALUE @Synchronized set
 
@@ -142,7 +138,10 @@ class UnsafeLazy2Impl<T, Param1, Param2>(initializer: (param1: Param1, param2: P
 }
 
 
-class SynchronizedLazy2<out T, Param1, Param2>(initializer: (param1: Param1, param2: Param2) -> T, lock: Any? = null) : Lazy2<T, Param1, Param2> {
+class SynchronizedLazy2<out T, Param1, Param2>(
+    initializer: (param1: Param1, param2: Param2) -> T,
+    lock: Any? = null
+) : Lazy2<T, Param1, Param2> {
     private val lock = lock ?: this
     private var initializer: ((param1: Param1, param2: Param2) -> T)? = initializer
     @Volatile private var _value: Any? = UNINITIALIZED_VALUE
@@ -188,7 +187,9 @@ interface Lazy3<out T, Param1, Param2, Param3> {
     fun get(param1: Param1, param2: Param2, param3: Param3) : T
 }
 
-class UnsafeLazy3Impl<T, Param1, Param2, Param3>(initializer: (param1: Param1, param2: Param2, param3: Param3) -> T) : Lazy3<T, Param1, Param2, Param3> {
+class UnsafeLazy3Impl<T, Param1, Param2, Param3>(
+    initializer: (param1: Param1, param2: Param2, param3: Param3) -> T
+) : Lazy3<T, Param1, Param2, Param3> {
     private var initializer: ((param1: Param1, param2: Param2, param3: Param3) -> T)? = initializer
     private var _value: Any? = UNINITIALIZED_VALUE @Synchronized set
 
@@ -205,7 +206,10 @@ class UnsafeLazy3Impl<T, Param1, Param2, Param3>(initializer: (param1: Param1, p
 }
 
 
-class SynchronizedLazy3<out T, Param1, Param2, Param3>(initializer: (param1: Param1, param2: Param2, param3: Param3) -> T, lock: Any? = null) : Lazy3<T, Param1, Param2, Param3> {
+class SynchronizedLazy3<out T, Param1, Param2, Param3>(
+    initializer: (param1: Param1, param2: Param2, param3: Param3) -> T,
+    lock: Any? = null
+) : Lazy3<T, Param1, Param2, Param3> {
     private val lock = lock ?: this
     private var initializer: ((param1: Param1, param2: Param2, param3: Param3) -> T)? = initializer
     @Volatile private var _value: Any? = UNINITIALIZED_VALUE

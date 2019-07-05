@@ -1,4 +1,4 @@
-package com.github.hereisderek.androidutil.util
+package com.github.hereisderek.androidutil.util.view
 
 import android.content.Context
 import android.graphics.Matrix
@@ -24,8 +24,9 @@ object ViewUtil {
         displayMetrics = context.resources.displayMetrics
     }
 
-    private fun getDisplayMetrics(context: Context?) = if (::displayMetrics.isInitialized) displayMetrics else {
-        init(context ?: throw Exception("displayMetrics hasn't been initialized and context is null"))
+    private fun getDisplayMetrics(context: Context?) = if (ViewUtil::displayMetrics.isInitialized) displayMetrics else {
+        init(context
+            ?: throw Exception("displayMetrics hasn't been initialized and context is null"))
         displayMetrics
     }
 
