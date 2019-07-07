@@ -95,8 +95,3 @@ object ViewUtil {
 
     val Matrix.averageScale : Float get() = (get(Matrix.MSCALE_X) + get(Matrix.MSCALE_Y)) / 2f
 }
-
-fun View.getOrGenerateId() : Int {
-    if (id != View.NO_ID) return id
-    return ViewCompat.generateViewId().also { id = it }
-}
