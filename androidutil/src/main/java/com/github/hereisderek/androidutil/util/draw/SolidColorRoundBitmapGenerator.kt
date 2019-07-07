@@ -57,7 +57,7 @@ class SolidColorRoundBitmapGenerator constructor(
                     color = circleColor
                     style = Paint.Style.FILL
                 }
-                canvas.drawCircle(radiusF, radiusF, radiusF/* - (borderWidth + shadowWidth)*/, paint)
+                canvas.drawCircle(radiusF, radiusF, radiusF - (borderWidth + shadowWidth), paint)
 
 
                 // draw border
