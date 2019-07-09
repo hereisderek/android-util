@@ -1,4 +1,4 @@
-package com.github.hereisderek.androidutil.util
+package com.github.hereisderek.androidutil.coroutine
 
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope

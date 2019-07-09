@@ -9,15 +9,14 @@ import android.database.MergeCursor
 import android.graphics.Bitmap
 import android.graphics.Point
 import android.media.MediaScannerConnection
-import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Build
 import android.os.CancellationSignal
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Size
-import androidx.annotation.RequiresApi
 import androidx.annotation.WorkerThread
+import com.github.hereisderek.androidutil.coroutine.pmap
 import com.github.hereisderek.androidutil.util.UriUtil.uriType
 import kotlinx.coroutines.CancellationException
 import timber.log.Timber

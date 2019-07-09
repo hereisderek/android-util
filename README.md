@@ -125,3 +125,31 @@ class ImageEditorPreviewViewHolder(context: Context) : RecyclerView.ViewHolder(A
         }
     
 ```
+
+
+#### 4. ICoroutineScope by CoroutineScopeImpl
+------
+A CoroutineScope implementation that provides mainContext, ioContext, exposes val job for children task creation, handles task 
+cancellation (by registering lifecycle `fun registerLifeCycle(owner: LifecycleOwner)`) or simply calling `fun cancelChildrenJobs()`
+
+```kotlin
+abstract class BaseFragment : Fragment(), ICoroutineScope by CoroutineScopeImpl() {
+    val requireActivity get() = requireActivity()
+    val requireContext get() = requireContext()
+    val appCompatActivity get() = activity as? AppCompatActivity
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        registerLifeCycle(this)
+    }
+
+    fun coroutineCall() = launch{
+        async{
+            // ... some async tasks
+        }
+    }
+
+}
+```
+
+
