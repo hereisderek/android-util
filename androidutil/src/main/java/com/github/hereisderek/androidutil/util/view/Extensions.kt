@@ -5,13 +5,9 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
 import android.view.View
-import android.view.ViewManager
-import android.widget.LinearLayout
 import androidx.core.view.ViewCompat
-import androidx.core.view.doOnPreDraw
-import com.github.hereisderek.androidutil.util.SDK_INT
+import androidx.core.view.doOnLayout
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 /**
@@ -39,43 +35,31 @@ fun View.laidOut() : Boolean {
     } else width > 0 || height > 0
 }
 
-@Suppress("LocalVariableName")
 suspend fun View.getSuspendWidth() : Int = suspendCoroutine{ susp ->
-    if (laidOut()) {
-        susp.resume(width)
-        return@suspendCoroutine
-    }
-    doOnPreDraw {
+    doOnLayout {
         susp.resume(width)
     }
 }
 
 
-@Suppress("LocalVariableName")
 suspend fun View.getSuspendHeight() : Int = suspendCoroutine{ susp ->
-    if (laidOut()) {
-        susp.resume(height)
-        return@suspendCoroutine
-    }
-    doOnPreDraw {
+    doOnLayout {
         susp.resume(height)
     }
 }
-
 
 val View.activity: Activity?
     get() {
         var ctx = context
-        while (true) {
-            if (!ContextWrapper::class.java.isInstance(ctx)) {
-                return null
+        while (ctx != null){
+            when (ctx) {
+                is Activity -> return ctx
+                else -> ctx = (ctx as? ContextWrapper)?.baseContext ?: return null
             }
-            if (Activity::class.java.isInstance(ctx)) {
-                return ctx as Activity
-            }
-            ctx = (ctx as ContextWrapper).baseContext
         }
+        return null
     }
+
 
 fun View.getOrGenerateId() : Int {
     if (id != View.NO_ID) return id
