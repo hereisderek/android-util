@@ -11,7 +11,8 @@ import java.io.Closeable
 
 
 interface Recyclable {
-    fun recycle()
+    val isRecycled: Boolean
+    fun recycle(): Boolean
 }
 
 fun Recyclable?.recycleFinally(cause: Throwable?) = when {

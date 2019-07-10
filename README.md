@@ -24,7 +24,7 @@ dependencies {
 
  
  
- ### Example
+ ### A. Example
  
  #### 1. Lazy init
  
@@ -151,5 +151,53 @@ abstract class BaseFragment : Fragment(), ICoroutineScope by CoroutineScopeImpl(
 
 }
 ```
+
+#### 5. ExpandablePool and SynchronizedExpandablePool
+
+well, it's just like any other pool project, but it takes a generator object so it's guaranteed that `fun acquire(): T` won't return
+`null` value (unless T is a nullable)
+
+I'll probably add use cases later but I'm too lazy so I'll just paste a test case here instead (SynchronizedExpandablePool is the thread safe version of the same thing)
+
+```kotlin
+@Test
+    fun testTrim() {
+        var index = 0
+        val pool = SimpleExpandablePool{
+            (index++).toString()
+        }
+
+        (0..10).forEach {
+            assertEquals(it, pool.size)
+            pool.release(it.toString())
+            assertEquals(it + 1, pool.size)
+        }
+        pool.trimToSize(4)
+        assertEquals(4, pool.size)
+    }
+```
+
+you can also call `fun <R> use(block: (T) -> R): R` for temporary use (automatically recycled right after)
+also an extension method for creating a pool object
+
+```kotlin
+ @Test
+    fun testCreation() {
+        class DummyClass(val index : Int)
+        var index = 0
+        val pool = pool(LazyThreadSafetyMode.SYNCHRONIZED) {
+            DummyClass(index++)
+        }
+
+        pool.use {
+            assertEquals(1, index)
+            assertEquals(it.index, 0)
+        }
+
+        assertEquals(1, pool.size)
+        assertEquals(0, pool.acquire().index)
+    }
+```
+ 
 
 

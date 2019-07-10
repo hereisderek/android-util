@@ -9,7 +9,18 @@ import androidx.core.util.Pools
  * Date: 2019-07-07 15:10
  * Project: Imagician Demo
  */
-
+fun <T, R>Pools.Pool<T>.useNullable(block: (T?)->R) : R {
+    val t = acquire()
+    try{
+        return block.invoke(t)
+    } catch (e: Throwable) {
+        throw e
+    } finally {
+        if (t != null) {
+            release(t)
+        }
+    }
+}
 
 class ObjectPool<T> constructor(
     maxPoolSize: Int = MAX_POOL_SIZE,
