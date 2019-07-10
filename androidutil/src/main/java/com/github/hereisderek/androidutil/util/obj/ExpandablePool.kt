@@ -2,6 +2,7 @@ package com.github.hereisderek.androidutil.util.obj
 
 import androidx.annotation.NonNull
 import androidx.core.util.Pools
+import timber.log.Timber
 
 /**
  *
@@ -27,12 +28,22 @@ public interface ExpandablePool<T> : Pools.Pool<T>{
     override fun acquire(): T
 
     /**
+     * continence method
+     * @see [use]
+     * @param R
+     * @param block
+     * @return
+     */
+    fun <R>acquire(block: (T)->R) : R = use(block)
+
+    /**
      * acquire a [T] (or create a new one if needed) for use, and immediately release it afterwards
      * @param R return object type
      * @param block to run on the acquired [T] object
      * @return
      */
     fun <R>use(block: (T)->R) : R
+
 
     fun acquirePoolObj(): PooledObj<T>
 
@@ -46,23 +57,38 @@ public interface ExpandablePool<T> : Pools.Pool<T>{
      * @return the actual size
      */
     fun trimToSize(size: Int) : Int
+
+
+    fun clearPool()
+
 }
 
 open class SimpleExpandablePool<T>(
     initialSize: Int = 10,
+    private var setUp: (T.() -> Unit)? = null,
     generator: (()->T)
 ) : ExpandablePool<T> {
 
+    constructor(
+        clazz: Class<T>,
+        initialSize: Int = 10,
+        setUp: (T.() -> Unit)? = null
+    ) : this(initialSize, setUp, {clazz.newInstance()})
+
     private var generator: (()->T)? = generator
         get() = field ?: throw IllegalStateException("unable to create new object, the pool has been destroyed (monstrously if I may add)")
+
+    // private var setUp: (T.() -> Unit)? = setUp
 
     private val mStorage = ArrayList<T>(initialSize)
 
     override val size: Int get() = mStorage.size
 
     override fun acquire(): T {
-        return mStorage.firstOrNull()
-            ?: generator!!()
+        // take and remove an existing t from the pool or create a new instance
+        return (mStorage.firstOrNull()?.also { mStorage.remove(it) } ?: generator!!()).also {
+            setUp?.invoke(it)
+        }
     }
 
     override fun acquirePoolObj(): PooledObj<T> {
@@ -92,12 +118,13 @@ open class SimpleExpandablePool<T>(
         }
     }
 
-    open fun clearPool() {
+    override fun clearPool() {
         mStorage.clear()
     }
 
     open fun destroy() {
         clearPool()
+        setUp = null
         generator = null
     }
 
@@ -119,11 +146,18 @@ open class SimpleExpandablePool<T>(
 open class SynchronizedExpandablePool<T>(
     initialSize: Int = 10,
     lock: Any? = null,
+    setUp: (T.() -> Unit)? = null,
     generator: (()->T)
-) : SimpleExpandablePool<T>(initialSize, generator){
+) : SimpleExpandablePool<T>(initialSize, setUp, generator){
     private val lock = lock ?: this
-    override val size: Int
-        get() = synchronized(lock) {super.size}
+    override val size: Int get() = synchronized(lock) {super.size}
+
+    constructor(
+        clazz: Class<T>,
+        initialSize: Int = 10,
+        lock: Any? = null,
+        setUp: (T.() -> Unit)? = null
+    ) : this(initialSize, lock, setUp, {clazz.newInstance()})
 
     override fun acquire(): T = synchronized(lock) {
         super.acquire()
@@ -141,8 +175,15 @@ open class SynchronizedExpandablePool<T>(
         super.isInPool(instance)
     }
 
-    override fun <R> use(block: (T) -> R): R = synchronized(lock) {
-        return super.use(block)
+    override fun <R> use(block: (T) -> R): R {
+        val t = acquire()
+        try {
+            return block.invoke(t)
+        } catch (e: Throwable) {
+            throw e
+        } finally {
+            release(t)
+        }
     }
 
     override fun clearPool() = synchronized(lock){
@@ -163,12 +204,25 @@ class PooledObj<T>(val obj:T, private val pool: ExpandablePool<T>) : Recyclable 
 }
 
 fun <T>pool(
+    clazz: Class<T>,
     mode : LazyThreadSafetyMode = LazyThreadSafetyMode.SYNCHRONIZED,
     initialSize : Int = 10,
+    setUp: (T.() -> Unit)? = null
+) : ExpandablePool<T> {
+    return when (mode) {
+        LazyThreadSafetyMode.NONE -> SimpleExpandablePool(clazz, initialSize, setUp)
+        else -> SynchronizedExpandablePool(clazz, initialSize, null, setUp)
+    }
+}
+
+fun <T>pool(
+    mode : LazyThreadSafetyMode = LazyThreadSafetyMode.SYNCHRONIZED,
+    initialSize : Int = 10,
+    setUp: (T.() -> Unit)? = null,
     generator : () -> T
 ) : ExpandablePool<T> {
     return when (mode) {
-        LazyThreadSafetyMode.NONE -> SimpleExpandablePool(initialSize, generator)
-        else -> SynchronizedExpandablePool(initialSize, null, generator)
+        LazyThreadSafetyMode.NONE -> SimpleExpandablePool(initialSize, setUp, generator)
+        else -> SynchronizedExpandablePool(initialSize, null, setUp, generator)
     }
 }

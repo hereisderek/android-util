@@ -6,6 +6,8 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.github.hereisderek.androidutil.util.obj.ObjectPool
+import com.github.hereisderek.androidutil.util.obj.pool
+import timber.log.Timber
 import kotlin.math.nextUp
 import kotlin.math.roundToInt
 
@@ -22,12 +24,12 @@ class SolidColorRoundBitmapGenerator constructor(
     private val mConfig: Bitmap.Config = Bitmap.Config.ARGB_8888
 ){
 
-    private val mPaintPool = ObjectPool(Paint::class.java, MAX_POOL_SIZE){
+    private val mPaintPool = pool(Paint::class.java, initialSize = MAX_POOL_SIZE) {
         isAntiAlias = true
         style = Paint.Style.FILL
     }
 
-    private val mCanvasPool = ObjectPool(MAX_POOL_SIZE){
+    private val mCanvasPool = pool(initialSize = MAX_POOL_SIZE){
         Canvas()
     }
 
@@ -48,8 +50,8 @@ class SolidColorRoundBitmapGenerator constructor(
         val radiusF = radius.toFloat()
         val bitmap = createEmptyBitmap(dimension, dimension, config)
 
-        mCanvasPool.acquire { canvas ->
-            mPaintPool.acquire { paint ->
+        mCanvasPool.use { canvas ->
+            mPaintPool.use { paint ->
                 canvas.setBitmap(bitmap)
 
                 // draw circle
@@ -94,7 +96,8 @@ class SolidColorRoundBitmapGenerator constructor(
     ) : Bitmap {
         val bitmap = createEmptyBitmap(radius * 2, config = config)
         val radiusF = radius.toFloat()
-        mCanvasPool.acquire { canvas ->
+
+        mCanvasPool.use { canvas ->
             mPaintPool.acquire { paint ->
                 canvas.setBitmap(bitmap)
                 paint.style = Paint.Style.FILL
@@ -102,6 +105,7 @@ class SolidColorRoundBitmapGenerator constructor(
                 canvas.drawCircle(radiusF, radiusF, radiusF, paint)
             }
         }
+
         return bitmap
     }
 
