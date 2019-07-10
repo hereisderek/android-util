@@ -3,11 +3,13 @@ package com.github.hereisderek.androidutil.util.view
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.os.Build
 import android.view.View
 import android.view.ViewManager
 import android.widget.LinearLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.doOnPreDraw
+import com.github.hereisderek.androidutil.util.SDK_INT
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -29,32 +31,34 @@ fun View.setTouchThrough(touchThrough: Boolean) {
     isFocusable = !touchThrough
 }
 
+/** as a replacement for [ViewCompat.isLaidOut] */
+@Suppress("FunctionName")
+fun View.laidOut() : Boolean {
+    return if (Build.VERSION.SDK_INT >= 19) {
+        ViewCompat.isLaidOut(this)
+    } else width > 0 || height > 0
+}
+
 @Suppress("LocalVariableName")
 suspend fun View.getSuspendWidth() : Int = suspendCoroutine{ susp ->
-    if (width != 0) {
+    if (laidOut()) {
         susp.resume(width)
         return@suspendCoroutine
     }
     doOnPreDraw {
-        val _width = width
-        if (_width == 0) {
-            susp.resumeWithException(Exception("Unable to get view width"))
-        } else susp.resume(_width)
+        susp.resume(width)
     }
 }
 
 
 @Suppress("LocalVariableName")
 suspend fun View.getSuspendHeight() : Int = suspendCoroutine{ susp ->
-    if (height != 0) {
+    if (laidOut()) {
         susp.resume(height)
         return@suspendCoroutine
     }
     doOnPreDraw {
-        val _height = height
-        if (_height == 0) {
-            susp.resumeWithException(Exception("Unable to get view width"))
-        } else susp.resume(_height)
+        susp.resume(height)
     }
 }
 
