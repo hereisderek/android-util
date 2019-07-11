@@ -27,6 +27,12 @@ android {
         freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
     }
 
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+
 }
 
 dependencies {
@@ -35,6 +41,8 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.0.2'
+
+    implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha06'
 
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1")

@@ -78,8 +78,6 @@ open class SimpleExpandablePool<T>(
     private var generator: (()->T)? = generator
         get() = field ?: throw IllegalStateException("unable to create new object, the pool has been destroyed (monstrously if I may add)")
 
-    // private var setUp: (T.() -> Unit)? = setUp
-
     private val mStorage = ArrayList<T>(initialSize)
 
     override val size: Int get() = mStorage.size
