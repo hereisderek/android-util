@@ -29,7 +29,7 @@ dependencies {
  #### 1. Lazy init
  
  ```kotlin
-import com.github.hereisderek.androidutil.util.obj.lazy
+import com.github.hereisderek.androidutil.obj.lazy
 
 class ImageEditorPreviewViewHolder(context: Context) : RecyclerView.ViewHolder(AppCompatImageView(context).apply {
     layoutParams = LAYOUT_PARAMS.get(context)

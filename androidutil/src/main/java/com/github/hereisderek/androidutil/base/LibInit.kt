@@ -7,8 +7,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.StrictMode
 import com.github.hereisderek.androidutil.BuildConfig
-import com.github.hereisderek.androidutil.util.view.ViewUtil
-import com.github.hereisderek.androidutil.util.color.ColorUtil
+import com.github.hereisderek.androidutil.view.ViewUtil
+import com.github.hereisderek.androidutil.color.ColorUtil
 import timber.log.Timber
 
 /**
