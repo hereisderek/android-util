@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.doOnLayout
+import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -64,4 +66,13 @@ val View.activity: Activity?
 fun View.getOrGenerateId() : Int {
     if (id != View.NO_ID) return id
     return ViewCompat.generateViewId().also { id = it }
+}
+
+fun View.doOnEveryParent(block: ViewGroup.()->Unit){
+    var p = parent
+    while (p is ViewGroup) {
+        Timber.d("got parent view group:${p.javaClass.simpleName}")
+        block.invoke(p)
+        p = p.parent
+    }
 }
