@@ -3,9 +3,13 @@ package com.github.hereisderek.androidutil.view
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.graphics.Rect
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.annotation.Size
 import androidx.core.view.ViewCompat
 import androidx.core.view.doOnLayout
 import timber.log.Timber
@@ -68,11 +72,37 @@ fun View.getOrGenerateId() : Int {
     return ViewCompat.generateViewId().also { id = it }
 }
 
-fun View.doOnEveryParent(block: ViewGroup.()->Unit){
+fun View.doOnEveryParent(breakIf: ((parent: ViewGroup) -> Boolean)? = null, block: ViewGroup.()->Unit){
     var p = parent
     while (p is ViewGroup) {
-        Timber.d("got parent view group:${p.javaClass.simpleName}")
+        if (breakIf != null && breakIf.invoke(p)) break
         block.invoke(p)
         p = p.parent
+    }
+}
+
+fun View.isPointInside(
+    rawX: Int,
+    rawY: Int,
+    outRec: Rect = Rect(),
+    @Size(2)  location: IntArray = IntArray(2)
+    ) : Boolean {
+    if (location.size != 2)
+        throw IllegalArgumentException("location IntArray must be an array of two integers")
+
+    getDrawingRect(outRec)
+    getLocationOnScreen(location)
+    outRec.offset(location[0], location[1])
+    return outRec.contains(rawX, rawY)
+}
+
+fun hideKeyboard(view: View){
+    (view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
+        ?.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun Activity.hideKeyboard() {
+    currentFocus?.also { focus ->
+        hideKeyboard(focus)
     }
 }
