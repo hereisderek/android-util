@@ -4,6 +4,8 @@ package com.github.hereisderek.androidutil.misc
 
 import android.graphics.RectF
 import android.os.Looper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 /**
  *
@@ -28,6 +30,63 @@ public fun <T> methodWrapper(pre: (() -> Unit)? = null, post: ((t:T) -> Unit)? =
     pre?.invoke()
     val result = block.invoke()
     post?.invoke(result)
+    return result
+}
+
+public fun <T> CoroutineScope.wrapWithCoroutine(
+    pre: (() -> Unit)? = null,
+    post: ((t: T) -> Unit)? = null,
+    block: suspend () -> T
+) {
+    launch {
+        pre?.invoke()
+        val result = block.invoke()
+        post?.invoke(result)
+    }
+}
+
+public fun <T> CoroutineScope.wrapWithCoroutineThrow(
+    pre: (() -> Unit)? = null,
+    post: ((t: T?) -> Unit)? = null,
+    block: suspend () -> T
+) {
+    launch {
+        pre?.invoke()
+        var exception : Exception? = null
+        var result : T? = null
+        try {
+            result = block.invoke()
+        } catch (e: Exception) {
+            exception = e
+            result = null
+        } finally {
+            post?.invoke(result)
+            if (exception != null) {
+                throw exception
+            }
+        }
+    }
+}
+
+public suspend fun <T> CoroutineScope.wrapSuspendThrow(
+    pre: (() -> Unit)? = null,
+    post: ((t: T?) -> Unit)? = null,
+    block: suspend () -> T
+) : T? {
+    pre?.invoke()
+    var exception : Exception? = null
+    var result : T? = null
+    try {
+        result = block.invoke()
+    } catch (e: Exception) {
+        exception = e
+        result = null
+    } finally {
+        post?.invoke(result)
+        if (exception != null) {
+            throw exception
+        }
+    }
     return result
 }
 
