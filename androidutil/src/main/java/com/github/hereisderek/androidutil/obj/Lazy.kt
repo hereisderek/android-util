@@ -95,13 +95,13 @@ class SynchronizedLazy1<out T, Param>(initializer: (param: Param) -> T, lock: An
 
 /// Lazy1
 @Deprecated("use by lazy{}", ReplaceWith("kotlin#lazy"))
-fun <T> lazy(initializer: () -> T) = kotlin.lazy { initializer() }
+fun <T> lazyInit(initializer: () -> T) = kotlin.lazy { initializer() }
 
 @Deprecated("use by lazy{}", ReplaceWith("kotlin#lazy"))
-fun <T> lazy(mode: LazyThreadSafetyMode = LazyThreadSafetyMode.SYNCHRONIZED, initializer: () -> T) = kotlin.lazy(mode) { initializer() }
+fun <T> lazy(mode: LazyThreadSafetyMode = LazyThreadSafetyMode.SYNCHRONIZED, initializer: () -> T) = kotlin.lazyInit(mode) { initializer() }
 
 
-fun <T, Param> lazy(
+fun <T, Param> lazyInit(
     mode : LazyThreadSafetyMode = LazyThreadSafetyMode.SYNCHRONIZED,
     initializer: (a: Param) -> T
 ) : Lazy1<T, Param> = when(mode){
@@ -109,7 +109,7 @@ fun <T, Param> lazy(
     else -> SynchronizedLazy1(initializer)
 }
 
-fun <T, Param> lazy(lock: Any?, initializer: (a: Param) -> T) = SynchronizedLazy1(initializer, lock)
+fun <T, Param> lazyInit(lock: Any?, initializer: (a: Param) -> T) = SynchronizedLazy1(initializer, lock)
 
 
 
@@ -169,7 +169,7 @@ class SynchronizedLazy2<out T, Param1, Param2>(
     override fun isInitialized(): Boolean = _value !== UNINITIALIZED_VALUE
 }
 
-fun <T, Param1, Param2> lazy(
+fun <T, Param1, Param2> lazyInit(
     mode : LazyThreadSafetyMode = LazyThreadSafetyMode.SYNCHRONIZED,
     initializer: (param1: Param1, param2: Param2) -> T
 ) : Lazy2<T, Param1, Param2> = when(mode) {
@@ -237,7 +237,7 @@ class SynchronizedLazy3<out T, Param1, Param2, Param3>(
     override fun isInitialized(): Boolean = _value !== UNINITIALIZED_VALUE
 }
 
-fun <T, Param1, Param2, Param3> lazy(
+fun <T, Param1, Param2, Param3> lazyInit(
     mode : LazyThreadSafetyMode = LazyThreadSafetyMode.SYNCHRONIZED,
     initializer: (param1: Param1, param2: Param2, param3: Param3) -> T
 ) : Lazy3<T, Param1, Param2, Param3> = when(mode) {
