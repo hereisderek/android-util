@@ -98,7 +98,7 @@ class SynchronizedLazy1<out T, Param>(initializer: (param: Param) -> T, lock: An
 fun <T> lazyInit(initializer: () -> T) = kotlin.lazy { initializer() }
 
 @Deprecated("use by lazy{}", ReplaceWith("kotlin#lazy"))
-fun <T> lazy(mode: LazyThreadSafetyMode = LazyThreadSafetyMode.SYNCHRONIZED, initializer: () -> T) = kotlin.lazyInit(mode) { initializer() }
+fun <T> lazy(mode: LazyThreadSafetyMode = LazyThreadSafetyMode.SYNCHRONIZED, initializer: () -> T) = kotlin.lazy(mode) { initializer() }
 
 
 fun <T, Param> lazyInit(
