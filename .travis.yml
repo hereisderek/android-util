@@ -64,7 +64,7 @@ before_install:
     - export LANG=en_US.UTF-8
     - yes | sdkmanager "platforms;android-29"
     - yes | sdkmanager "build-tools;29.0.1"
-    - yes | sdkmanager --licenses
+    - yes | sdkmanager "build-tools;29.0.0"
 
 script:
    - ./gradlew build
