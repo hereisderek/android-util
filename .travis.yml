@@ -1,7 +1,7 @@
 language: android
-os: linux
-sudo: required
-jdk: oraclejdk8
+# os: linux
+# sudo: required
+# jdk: oraclejdk8
 dist: trusty
 
 
@@ -34,11 +34,14 @@ android:
     # if you need to run emulator(s) during your tests
     # - sys-img-x86-android-26
     # - sys-img-armeabi-v7a-android-17
+  
 
-  # licenses:
-  #   - 'android-sdk-preview-license-52d11cd2'
-  #   - 'android-sdk-license-.+'
-  #   - 'google-gdk-license-.+'
+  licenses:
+    - 'android-sdk-preview-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+    # White list all the licenses.
+    - '.+'
 
 
 
@@ -61,6 +64,7 @@ before_install:
     - export LANG=en_US.UTF-8
     - yes | sdkmanager "platforms;android-29"
     - yes | sdkmanager "build-tools;29.0.1"
+    - yes | sdkmanager --licenses
 
 script:
    - ./gradlew build
