@@ -1,4 +1,4 @@
-package com.github.hereisderek.androidutil.view.recyclerview
+package com.github.hereisderek.androidutil.view.list.recyclerview
 
 import androidx.annotation.CallSuper
 import androidx.viewpager2.widget.ViewPager2
