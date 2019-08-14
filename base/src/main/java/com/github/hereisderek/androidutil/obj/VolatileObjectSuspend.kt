@@ -37,8 +37,8 @@ class VolatileObjectSuspend<T> (
                 t = currentT
                 updater.invoke(t)
                 dirty = false
-                this.t = t
             }
+            this.t = t
             return t
         }
         return currentT

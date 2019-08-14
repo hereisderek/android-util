@@ -23,7 +23,7 @@ package com.github.hereisderek.androidutil.obj
  * @param T the data type
  * @property generator lazy creation of the object. no need to update its data yet
  *
- * @property updater block of code to update the @param T object
+ * @property updater block of code to update the @param T object, @return if successfully updated
  */
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -48,6 +48,7 @@ class VolatileObject<T>(
             val t: T
             if (updater == null) {
                 t = generator()
+                this.t = t
                 dirty = false
             } else {
                 t = currentT ?: generator()
