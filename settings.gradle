@@ -1,2 +1,2 @@
 include ':androidutil'
-rootProject.name='androidutil'
+rootProject.name='android-util'
