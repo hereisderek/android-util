@@ -98,8 +98,9 @@ fun RectF.covers(x: Float, y: Float): Boolean {
 
 
 /* thread */
-val isOnMainThread get() = Looper.myLooper() == Looper.getMainLooper()
+inline val isOnMainThread get() = Looper.myLooper() == Looper.getMainLooper()
 
+inline val threadName get() = Thread.currentThread().name
 
 /* Time measurement */
 

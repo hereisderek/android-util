@@ -1,2 +1,2 @@
-include ':androidutil'
+include ':base'
 rootProject.name='android-util'

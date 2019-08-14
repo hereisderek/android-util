@@ -29,7 +29,7 @@ package com.github.hereisderek.androidutil.obj
 @Suppress("MemberVisibilityCanBePrivate")
 class VolatileObject<T>(
     private val generator: () -> T,
-    private val onDirtyListener: (()->Unit)? = null,
+    private val onDirtyListener: ((lazyValue: ()->T?)->Unit)? = null,
     private val updater: (T.() -> Boolean)? = null) {
 
 
@@ -62,10 +62,17 @@ class VolatileObject<T>(
     }
 
 
+/*    constructor(
+        generator: () -> T,
+        onDirtyListener: (()->Unit)? = null,
+        updater: (T.() -> Boolean)? = null
+    ) : this(generator, if (onDirtyListener == null) null else {_ -> onDirtyListener.invoke()}, updater)*/
+
+
     fun dirty() {
         if (!this.dirty) {
             this.dirty = true
-            onDirtyListener?.invoke()
+            onDirtyListener?.invoke {value}
         }
     }
 
@@ -82,4 +89,9 @@ class VolatileObject<T>(
      * @return null if failed to update the data
      */
     fun get() = value
+
+
+    companion object {
+
+    }
 }
