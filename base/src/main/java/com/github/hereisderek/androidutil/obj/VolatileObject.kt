@@ -27,6 +27,7 @@ package com.github.hereisderek.androidutil.obj
  */
 
 @Suppress("MemberVisibilityCanBePrivate")
+@Deprecated("deprecated", ReplaceWith("MutableObj<T>"))
 class VolatileObject<T>(
     private val generator: () -> T,
     private val onDirtyListener: ((lazyValue: ()->T?)->Unit)? = null,

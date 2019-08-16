@@ -198,6 +198,28 @@ also an extension method for creating a pool object
         assertEquals(0, pool.acquire().index)
     }
 ```
+
+#### 6. VolatileObject
+a self-contained, reusable computed obj that only update when requested but marked as dirty (lazy calculate)
+
+
+```kotlin
+import com.github.hereisderek.androidutil.obj.MutableObj
+
+// probably not the best use case but this is what I have right now
+private val mViewCenterVO = MutableObj<PointF?>{
+        val laidOut = ViewCompat.isLaidOut(this)
+        Timber.d("laidOut:$laidOut, width:${this.width}, height:${this.height}, isReady:$isReady")
+        if (laidOut && isReady) {
+            (it ?: PointF()).apply {
+                x = width / 2f
+                y = height / 2f
+            }
+        } else null
+    }
+
+```
+
  
 
 

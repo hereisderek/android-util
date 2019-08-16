@@ -10,7 +10,7 @@ package com.github.hereisderek.androidutil.math
 
 /**
  * calculate a linear equation in the form of
- * y = ax + b that saticfies points (x1, y1) and (x2, y2)
+ * y = ax + b that satisfies points (x1, y1) and (x2, y2)
  *
  *
  * @property x1
@@ -32,17 +32,18 @@ class LinearPlot <T1 : Number, T2 : Number> @JvmOverloads constructor(
 
 open class LinearPlotF @JvmOverloads constructor(val y1 : Float, val y2 : Float, val x1 : Float = 0f, val x2 : Float = 1f, val lockWithIn: Boolean = false) {
     init {
-        assert(y1 < y2)
-        assert(x1 != x2)
+        if (x1 == x2) {
+            throw IllegalArgumentException("x1 should not equal to x2")
+        }
     }
 
     val a : Float = (y1 - y2) / (x1 - x2)
-    val b : Float by lazy(LazyThreadSafetyMode.NONE) { (y1 * x2 - x1 * y2) / (x2 - x1) }
+    // we only need this calculation if it's actually used, although it should be relatively quick
+    val b : Float by lazy(LazyThreadSafetyMode.PUBLICATION) { (y1 * x2 - x1 * y2) / (x2 - x1) }
 
     open fun get(x : Float) = when {
         lockWithIn && x <= x1 -> y1
         lockWithIn && x >= x2 -> y2
-        // else ->  ((x - x1) / (x2 - x1)) * (y2 - y1) + y1
         else -> a * x + b
     }
 
