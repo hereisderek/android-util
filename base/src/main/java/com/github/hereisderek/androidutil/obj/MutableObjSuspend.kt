@@ -25,10 +25,13 @@ class MutableObjSuspend <T>(
     }
 
     @Synchronized suspend fun  get() : T {
-        if (_isDirty || currentValue == null) {
-            currentValue = updater.invoke(currentValue)
+        var value = currentValue
+        if (_isDirty || value == null) {
+            value = updater.invoke(currentValue)
+            currentValue = value
             _isDirty = false
+            return value
         }
-        return currentValue!!
+        return value
     }
 }

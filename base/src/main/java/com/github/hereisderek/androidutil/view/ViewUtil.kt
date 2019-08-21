@@ -1,10 +1,13 @@
 package com.github.hereisderek.androidutil.view
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Matrix
 import android.os.Build
 import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.MotionEvent
+import androidx.annotation.IntDef
 import timber.log.Timber
 
 /**
@@ -18,13 +21,18 @@ import timber.log.Timber
 object ViewUtil {
     private lateinit var displayMetrics: DisplayMetrics
     /* View */
-    fun init(context: Context) {
-        displayMetrics = context.resources.displayMetrics
+    @Retention(AnnotationRetention.SOURCE)
+    @IntDef(value = [TypedValue.COMPLEX_UNIT_DIP, TypedValue.COMPLEX_UNIT_SP, TypedValue.COMPLEX_UNIT_PT,  TypedValue.COMPLEX_UNIT_IN, TypedValue.COMPLEX_UNIT_MM])
+    annotation class TypedValueUnit
+
+
+
+    fun init(context: Context?) {
+        displayMetrics = context?.resources?.displayMetrics ?: Resources.getSystem().displayMetrics
     }
 
     private fun getDisplayMetrics(context: Context?) = if (ViewUtil::displayMetrics.isInitialized) displayMetrics else {
-        init(context
-            ?: throw Exception("displayMetrics hasn't been initialized and context is null"))
+        init(context)
         displayMetrics
     }
 
@@ -38,13 +46,16 @@ object ViewUtil {
         return  (metrics.densityDpi / 160f) * dp
     }
 
-    fun pixelsToSp(px: Float, context: Context?): Float {
+    fun pixelsToSp(px: Float, context: Context? = null): Float {
         return px / getDisplayMetrics(context).scaledDensity
     }
 
-    fun spToPixel(sp: Float, context: Context?) : Float {
+    fun spToPixel(sp: Float, context: Context? = null) : Float {
         return getDisplayMetrics(context).scaledDensity * sp
     }
+
+    fun applyDimension(@TypedValueUnit unit: Int, value: Float, context: Context? = null)
+            = TypedValue.applyDimension(unit, value, getDisplayMetrics(context))
 
 
     /* Touch Event */

@@ -25,8 +25,8 @@ class MutableObj<T>(
 ) {
     private var _isDirty = true; @Synchronized set
 
-    private val isDirty get() = _isDirty
-    private val value get() = get()
+    val isDirty get() = _isDirty
+    val value get() = get()
 
     private var currentValue : T? = null
 
@@ -42,10 +42,13 @@ class MutableObj<T>(
     }
 
     @Synchronized fun  get() : T {
-        if (_isDirty || currentValue == null) {
-            currentValue = updater.invoke(currentValue)
+        var value = currentValue
+        if (_isDirty || value == null) {
+            value = updater.invoke(currentValue)
+            currentValue = value
             _isDirty = false
+            return value
         }
-        return currentValue!!
+        return value
     }
 }
