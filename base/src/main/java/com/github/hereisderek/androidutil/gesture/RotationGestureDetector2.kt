@@ -11,6 +11,10 @@ import kotlin.math.atan2
  */
 
 // https://stackoverflow.com/questions/10682019/android-two-finger-rotation
+/**
+ * @Deprecated: use RotationGestureDetector for better handling on smaller views
+ * */
+@Deprecated("replaced by RotationGestureDetector", ReplaceWith("RotationGestureDetector"))
 class RotationGestureDetector2(private val mListener: OnRotationGestureListener?) {
     private var fX: Float = 0f
     private var fY: Float = 0f
@@ -64,7 +68,7 @@ class RotationGestureDetector2(private val mListener: OnRotationGestureListener?
     }
 
     interface OnRotationGestureListener {
-        fun onRotation(@FloatRange(from = -180.0, to = 180.0, fromInclusive = true, toInclusive = true) angle: Float, rotationDetector: RotationGestureDetector)
+        fun onRotation(@FloatRange(from = -180.0, to = 180.0, fromInclusive = true, toInclusive = true) angle: Float, rotationDetector: RotationGestureDetector2)
     }
 
     companion object {

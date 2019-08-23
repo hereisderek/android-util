@@ -3,6 +3,7 @@ package com.github.hereisderek.androidutil.gesture
 import android.graphics.PointF
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.FloatRange
 
 import timber.log.Timber
 import kotlin.math.cos
@@ -48,7 +49,7 @@ class RotationGestureDetector(private val mListener: OnRotationGestureListener?,
 
                 angle = angleBetweenLines(mFPoint, mSPoint, nfPoint, nsPoint)
 
-                mListener?.onRotation(this)
+                mListener?.onRotation(angle, this)
             }
             MotionEvent.ACTION_UP -> mPtrID1 = INVALID_POINTER_ID
             MotionEvent.ACTION_POINTER_UP -> mPtrID2 = INVALID_POINTER_ID
@@ -91,7 +92,10 @@ class RotationGestureDetector(private val mListener: OnRotationGestureListener?,
     }
 
     interface OnRotationGestureListener {
-        fun onRotation(rotationDetector: RotationGestureDetector)
+        fun onRotation(
+            @FloatRange(from = -180.0, to = 180.0, fromInclusive = true, toInclusive = true) angle: Float,
+            rotationDetector: RotationGestureDetector
+        )
     }
 
     companion object {
