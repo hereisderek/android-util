@@ -19,3 +19,10 @@ fun Closeable?.closeQuiet() {
         Timber.e("Closeable?.closeQuiet ignored exception:${e.message}")
     }
 }
+
+
+/*
+fun <T> T?.useOrNull() {
+    if (this == null) return null
+
+}*/

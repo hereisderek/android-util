@@ -7,6 +7,19 @@ package com.github.hereisderek.androidutil.obj
  * Project: Imagician Demo
  */
 
+fun <T> mutable(
+    onDirty: ((first: Boolean, oldValue: T?, lazyValue: ()->T?)->Unit)? = null,
+    updater: (oldValue : T?) -> T
+) : MutableObj<T> = MutableObj<T>(onDirty, updater)
+
+
+fun <T, D> mutable(
+    onDirty: ((first: Boolean, oldValue: T?, lazyValue: (depend: D)->T?)->Unit)? = null,
+    updater: (depend: D, reuse : T?) -> T
+) : MutableObj2<T, D> = MutableObj2<T, D>(onDirty, updater)
+
+
+
 /**
  * a self-contained, reusable computed obj that only update
  * when requested but marked as dirty
@@ -45,6 +58,42 @@ class MutableObj<T>(
         var value = currentValue
         if (_isDirty || value == null) {
             value = updater.invoke(currentValue)
+            currentValue = value
+            _isDirty = false
+            return value
+        }
+        return value
+    }
+}
+
+
+/**
+ * @param D: dependent
+ * */
+class MutableObj2<T, D>(
+    private val onDirty: ((first: Boolean, oldValue: T?, lazyValue: (depend: D)->T?)->Unit)? = null,
+    private val updater: (depend: D, reuse : T?) -> T
+) {
+    private var _isDirty = true; @Synchronized set
+
+    val isDirty get() = _isDirty
+
+    private var currentValue : T? = null
+
+    fun dirty() {
+        // we save the dirty to a local variable so in onDirty block if the user
+        // gets the new value it won't be marked dirty again
+        val dirty = _isDirty
+        this._isDirty = true
+        onDirty?.invoke(!dirty, currentValue){
+            get(it)
+        }
+    }
+
+    @Synchronized fun  get(depend: D) : T {
+        var value = currentValue
+        if (_isDirty || value == null) {
+            value = updater.invoke(depend, currentValue)
             currentValue = value
             _isDirty = false
             return value
