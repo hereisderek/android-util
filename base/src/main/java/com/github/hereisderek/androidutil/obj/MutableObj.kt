@@ -48,9 +48,7 @@ class MutableObj<T>(
         // gets the new value it won't be marked dirty again
         val dirty = _isDirty
         this._isDirty = true
-        onDirty?.invoke(!dirty, currentValue){
-            get()
-        }
+        onDirty?.invoke(!dirty, currentValue, {get()})
 
     }
 

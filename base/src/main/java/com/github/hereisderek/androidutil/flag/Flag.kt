@@ -43,6 +43,7 @@ class Flag(var value: Int = 0) {
         minusAssign(flag.value)
     }
 
+    override fun toString(): String = "${javaClass.simpleName}:$value"
 
 
     companion object {

@@ -1,5 +1,6 @@
 package com.github.hereisderek.androidutil.gesture
 
+import android.graphics.PointF
 import android.view.MotionEvent
 import androidx.annotation.FloatRange
 import kotlin.math.atan2
@@ -10,11 +11,11 @@ import kotlin.math.atan2
  * Project: Imagician Demo
  */
 
-// https://stackoverflow.com/questions/10682019/android-two-finger-rotation
+// modified based on https://stackoverflow.com/questions/10682019/android-two-finger-rotation
 /**
  * @Deprecated: use RotationGestureDetector for better handling on smaller views
  * */
-@Deprecated("replaced by RotationGestureDetector", ReplaceWith("RotationGestureDetector"))
+// @Deprecated("replaced by RotationGestureDetector", ReplaceWith("RotationGestureDetector"))
 class RotationGestureDetector2(private val mListener: OnRotationGestureListener?) {
     private var fX: Float = 0f
     private var fY: Float = 0f
@@ -22,8 +23,22 @@ class RotationGestureDetector2(private val mListener: OnRotationGestureListener?
     private var sY: Float = 0f
     private var ptrID1: Int = INVALID_POINTER_ID
     private var ptrID2: Int = INVALID_POINTER_ID
-    var angle: Float = 0.toFloat()
-        private set
+    private var _previousAngle: Float = 0.toFloat()
+    private var _angle: Float = 0.toFloat()
+    private val _focusPoint = PointF()
+
+
+
+    @Suppress("MemberVisibilityCanBePrivate")
+    val previousAngle get() = _previousAngle
+
+    @Suppress("MemberVisibilityCanBePrivate")
+    val angle get() = _angle
+
+    @Suppress("MemberVisibilityCanBePrivate")
+    val inProgress get() = ptrID1 != INVALID_POINTER_ID && ptrID2 != INVALID_POINTER_ID
+
+    val focus : PointF? get() = if (inProgress) _focusPoint else null
 
     init { }
 
@@ -36,25 +51,32 @@ class RotationGestureDetector2(private val mListener: OnRotationGestureListener?
                 sY = event.getY(event.findPointerIndex(ptrID1))
                 fX = event.getX(event.findPointerIndex(ptrID2))
                 fY = event.getY(event.findPointerIndex(ptrID2))
+                _focusPoint.set((sX + fX) / 2f, (sY + fY) / 2f)
             }
+
             MotionEvent.ACTION_MOVE -> if (ptrID1 != INVALID_POINTER_ID && ptrID2 != INVALID_POINTER_ID) {
                 val nsX = event.getX(event.findPointerIndex(ptrID1))
                 val nsY = event.getY(event.findPointerIndex(ptrID1))
                 val nfX = event.getX(event.findPointerIndex(ptrID2))
                 val nfY = event.getY(event.findPointerIndex(ptrID2))
 
-                angle = angleBetweenLines(fX, fY, sX, sY, nfX, nfY, nsX, nsY)
-
-                mListener?.onRotation(angle, this)
+                _focusPoint.set((nsX + nfX) / 2f, (nsY + nfY) / 2f)
+                _previousAngle = _angle
+                _angle = angleBetweenLines(fX, fY, sX, sY, nfX, nfY, nsX, nsY)
+                return mListener?.onRotation(angle, this) ?: false
             }
+
             MotionEvent.ACTION_UP -> ptrID1 = INVALID_POINTER_ID
             MotionEvent.ACTION_POINTER_UP -> ptrID2 = INVALID_POINTER_ID
             MotionEvent.ACTION_CANCEL -> {
                 ptrID1 = INVALID_POINTER_ID
                 ptrID2 = INVALID_POINTER_ID
+                _focusPoint.set(0f, 0f)
+                _previousAngle = 0f
+                _angle = 0f
             }
         }
-        return true
+        return mListener != null
     }
 
     private fun angleBetweenLines(fX: Float, fY: Float, sX: Float, sY: Float, nfX: Float, nfY: Float, nsX: Float, nsY: Float): Float {
@@ -68,7 +90,10 @@ class RotationGestureDetector2(private val mListener: OnRotationGestureListener?
     }
 
     interface OnRotationGestureListener {
-        fun onRotation(@FloatRange(from = -180.0, to = 180.0, fromInclusive = true, toInclusive = true) angle: Float, rotationDetector: RotationGestureDetector2)
+        fun onRotation(
+            @FloatRange(from = -180.0, to = 180.0, fromInclusive = true, toInclusive = true) angle: Float,
+            rotationDetector: RotationGestureDetector2
+        ) : Boolean
     }
 
     companion object {

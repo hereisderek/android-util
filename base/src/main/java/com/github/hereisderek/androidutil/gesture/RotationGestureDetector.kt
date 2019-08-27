@@ -6,6 +6,7 @@ import android.view.View
 import androidx.annotation.FloatRange
 
 import timber.log.Timber
+import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -16,17 +17,23 @@ import kotlin.math.sin
  */
 
 
-class RotationGestureDetector(private val mListener: OnRotationGestureListener?, private val mView: View) {
+class RotationGestureDetector(private val mListener: OnRotationGestureListener?, private val mView: View? = null) {
     private val mFPoint = PointF()
     private val mSPoint = PointF()
     private var mPtrID1: Int = INVALID_POINTER_ID
     private var mPtrID2: Int = INVALID_POINTER_ID
     private val mLocation = intArrayOf(0, 0)
-    var angle: Float = 0.toFloat()
-        private set
+
+    private var _angle: Float = 0.toFloat()
+    val angle: Float get() = _angle
 
 
-    fun onTouchEvent(event: MotionEvent): Boolean {
+
+    fun onTouchEvent(event: MotionEvent, view: View? = mView): Boolean {
+        val view = checkNotNull(view ?: mView){
+            "view is null, unable to calculate Raw Point"
+        }
+
         when (event.actionMasked) {
             MotionEvent.ACTION_OUTSIDE -> Timber.d("ACTION_OUTSIDE")
             MotionEvent.ACTION_DOWN -> {
@@ -37,19 +44,19 @@ class RotationGestureDetector(private val mListener: OnRotationGestureListener?,
                 Timber.d("ACTION_POINTER_DOWN")
                 mPtrID2 = event.getPointerId(event.actionIndex)
 
-                getRawPoint(event, mPtrID1, mSPoint)
-                getRawPoint(event, mPtrID2, mFPoint)
+                getRawPoint(event, mPtrID1, mSPoint, view)
+                getRawPoint(event, mPtrID2, mFPoint, view)
             }
             MotionEvent.ACTION_MOVE -> if (mPtrID1 != INVALID_POINTER_ID && mPtrID2 != INVALID_POINTER_ID) {
                 val nfPoint = PointF()
                 val nsPoint = PointF()
 
-                getRawPoint(event, mPtrID1, nsPoint)
-                getRawPoint(event, mPtrID2, nfPoint)
+                getRawPoint(event, mPtrID1, nsPoint, view)
+                getRawPoint(event, mPtrID2, nfPoint, view)
 
-                angle = angleBetweenLines(mFPoint, mSPoint, nfPoint, nsPoint)
+                _angle = angleBetweenLines(mFPoint, mSPoint, nfPoint, nsPoint)
 
-                mListener?.onRotation(angle, this)
+                mListener?.onRotation(_angle, this)
             }
             MotionEvent.ACTION_UP -> mPtrID1 = INVALID_POINTER_ID
             MotionEvent.ACTION_POINTER_UP -> mPtrID2 = INVALID_POINTER_ID
@@ -63,15 +70,15 @@ class RotationGestureDetector(private val mListener: OnRotationGestureListener?,
         return true
     }
 
-    private fun getRawPoint(ev: MotionEvent, index: Int, point: PointF) {
+    private fun getRawPoint(ev: MotionEvent, index: Int, point: PointF, view: View) {
         val location = mLocation
-        mView.getLocationOnScreen(location)
+        view.getLocationOnScreen(location)
 
         var x = ev.getX(index)
         var y = ev.getY(index)
 
-        var angle = Math.toDegrees(Math.atan2(y.toDouble(), x.toDouble()))
-        angle += mView.rotation.toDouble()
+        var angle = Math.toDegrees(atan2(y.toDouble(), x.toDouble()))
+        angle += view.rotation.toDouble()
 
         val length = PointF.length(x, y)
 
@@ -82,8 +89,8 @@ class RotationGestureDetector(private val mListener: OnRotationGestureListener?,
     }
 
     private fun angleBetweenLines(fPoint: PointF, sPoint: PointF, nFpoint: PointF, nSpoint: PointF): Float {
-        val angle1 = Math.atan2((fPoint.y - sPoint.y).toDouble(), (fPoint.x - sPoint.x).toDouble()).toFloat()
-        val angle2 = Math.atan2((nFpoint.y - nSpoint.y).toDouble(), (nFpoint.x - nSpoint.x).toDouble()).toFloat()
+        val angle1 = atan2((fPoint.y - sPoint.y).toDouble(), (fPoint.x - sPoint.x).toDouble()).toFloat()
+        val angle2 = atan2((nFpoint.y - nSpoint.y).toDouble(), (nFpoint.x - nSpoint.x).toDouble()).toFloat()
 
         var angle = Math.toDegrees((angle1 - angle2).toDouble()).toFloat() % 360
         if (angle < -180f) angle += 360.0f

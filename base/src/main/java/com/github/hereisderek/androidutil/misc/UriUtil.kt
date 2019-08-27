@@ -50,6 +50,6 @@ object UriUtil {
 
 
     fun toUriIdFromContentUri(uri: Uri) : Long {
-        return ContentUris.parseId(uri)
+        return if (uri.uriType != UriType.ContentUri) -1 else ContentUris.parseId(uri)
     }
 }
