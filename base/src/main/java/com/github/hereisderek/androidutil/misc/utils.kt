@@ -2,6 +2,7 @@
 
 package com.github.hereisderek.androidutil.misc
 
+import android.content.Context
 import android.graphics.RectF
 import android.os.Looper
 import kotlinx.coroutines.CoroutineScope
@@ -145,3 +146,5 @@ inline class TimedResult<T>(val timedResult: Pair<Long, T>) {
     val time get() = timedResult.first
     val result get() = timedResult.second
 }
+
+fun getPackageName(context: Context) : String = context.packageName

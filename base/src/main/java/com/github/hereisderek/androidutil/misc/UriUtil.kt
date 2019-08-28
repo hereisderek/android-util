@@ -30,6 +30,8 @@ object UriUtil {
         }
     }
 
+    fun getType(uri: Uri) = uri.uriType
+
     fun toUriFromResourceId(resId: Int, context: Context) : Uri {
         return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + resId)
     }

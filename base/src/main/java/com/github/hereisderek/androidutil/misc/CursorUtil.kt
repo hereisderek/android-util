@@ -10,17 +10,22 @@ import android.database.Cursor
  */
 
 
-fun <T> Cursor.toArrayList(block: (Cursor) -> T): ArrayList<T> {
+fun <T> Cursor.toArrayList(block: (Cursor) -> T): ArrayList<T> = toArrayList(false, block)
+
+
+fun <T> Cursor.toArrayList(close: Boolean = false, block: (Cursor) -> T): ArrayList<T> {
     return arrayListOf<T>().also { list ->
         if (moveToFirst()) {
             do {
                 list.add(block.invoke(this))
             } while (moveToNext())
         }
+        if (close) { close() }
     }
 }
 
-fun <T> Cursor.toArrayListIndexed(block: (Cursor, index: Int) -> T): ArrayList<T> {
+@JvmOverloads
+fun <T> Cursor.toArrayListIndexed(close: Boolean = false, block: (Cursor, index: Int) -> T): ArrayList<T> {
     return arrayListOf<T>().also { list ->
         if (moveToFirst()) {
             for (index in 0 until this.count) {
@@ -28,5 +33,6 @@ fun <T> Cursor.toArrayListIndexed(block: (Cursor, index: Int) -> T): ArrayList<T
                 if (!moveToNext()) break
             }
         }
+        if (close) { close() }
     }
 }
