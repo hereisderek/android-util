@@ -1,6 +1,8 @@
 package com.github.hereisderek.androidutil.math
 
 import java.util.*
+import kotlin.math.pow
+import kotlin.math.sqrt
 import kotlin.math.max as kMax
 import kotlin.math.min as kMin
 
@@ -40,8 +42,8 @@ object MathUtil {
     val newUuid get() = UUID.randomUUID().toString()
 
     fun <T : Number> distance(x1: T, y1: T, x2: T, y2: T) : Double {
-        val sq = Math.pow((x2.toDouble() - x1.toDouble()), 2.0) + Math.pow((y2.toDouble() - y1.toDouble()), 2.0)
-        return Math.sqrt(sq)
+        val sq = (x2.toDouble() - x1.toDouble()).pow(2.0) + (y2.toDouble() - y1.toDouble()).pow(2.0)
+        return sqrt(sq)
     }
 
 

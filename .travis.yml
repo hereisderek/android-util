@@ -2,8 +2,9 @@ language: android
 # os: linux
 # sudo: required
 # jdk: oraclejdk8
-dist: trusty
-
+# dist: trusty
+jdk: oraclejdk8
+sudo: false
 
 git:
   depth: 1
@@ -21,6 +22,7 @@ android:
     - platform-tools
     - build-tools-29.0.1
     - android-29
+    - extra-android-m2repository
 
     # - add-on
     # - extra
@@ -65,4 +67,4 @@ before_install:
     - yes | sdkmanager "build-tools;29.0.0"
 
 script:
-   - ./gradlew build
+   - ./gradlew clean build
