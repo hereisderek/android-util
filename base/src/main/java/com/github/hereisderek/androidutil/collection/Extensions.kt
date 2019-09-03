@@ -1,5 +1,6 @@
 package com.github.hereisderek.androidutil.collection
 
+import androidx.collection.SimpleArrayMap
 import java.lang.IndexOutOfBoundsException
 
 /**
@@ -40,4 +41,15 @@ fun FloatArray.set(vararg values: Float)  {
     values.forEachIndexed { index, fl ->
         this[index] = fl
     }
+}
+
+
+fun <K, V> SimpleArrayMap<K, V>.toKeyList() : List<K> {
+    val size = this.size()
+    if (size() == 0) return emptyList()
+    val list = ArrayList<K>(size())
+    for ( i in 0 until size) {
+        list.add(this.keyAt(i))
+    }
+    return list
 }
