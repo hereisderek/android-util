@@ -17,6 +17,7 @@ import android.provider.OpenableColumns
 import android.util.Size
 import androidx.annotation.WorkerThread
 import com.github.hereisderek.androidutil.coroutine.pmap
+import com.github.hereisderek.androidutil.misc.UriUtil.toUriIdFromContentUri
 import com.github.hereisderek.androidutil.misc.UriUtil.uriType
 import kotlinx.coroutines.CancellationException
 import timber.log.Timber
@@ -142,7 +143,7 @@ object BitmapUtil {
 
 
     suspend fun getImageIdByUri(context: Context, uris: List<Uri>) : List<Long> = uriToContentUri(context, uris).map {
-        ContentUris.parseId(it)
+        toUriIdFromContentUri(it)
     }
 
     suspend fun getImageIdByUri2(context: Context, uris: List<Uri>) : List<Long> {
