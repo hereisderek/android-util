@@ -1,6 +1,7 @@
 package com.github.hereisderek.androidutil.misc
 
 import android.database.Cursor
+import androidx.collection.ArrayMap
 
 /**
  *
@@ -9,27 +10,31 @@ import android.database.Cursor
  * Project: AndroidUtil
  */
 
-
-fun <T> Cursor.toArrayList(block: (Cursor) -> T): ArrayList<T> = toArrayList(false, block)
-
-
-fun <T> Cursor.toArrayList(close: Boolean = false, block: (Cursor) -> T): ArrayList<T> {
+@JvmOverloads
+inline fun <T> Cursor.toArrayListIndexed(close: Boolean = false, block: Cursor.(index: Int) -> T): ArrayList<T> {
     return arrayListOf<T>().also { list ->
-        if (moveToFirst()) {
-            do {
-                list.add(block.invoke(this))
-            } while (moveToNext())
+        try {
+            if (moveToFirst()) {
+                for (index in 0 until this.count) {
+                    list.add(block.invoke(this, index))
+                    if (!moveToNext()) break
+                }
+            }
+        } finally {
+            if (close) { close() }
         }
-        if (close) { close() }
     }
 }
 
+
+
 @JvmOverloads
-fun <T> Cursor.toArrayListIndexed(close: Boolean = false, block: (Cursor, index: Int) -> T): ArrayList<T> {
-    return arrayListOf<T>().also { list ->
+fun <K, V> Cursor.toArrayMapIndexed(close: Boolean = false, block: Cursor.(index: Int) -> Pair<K, V>) : Map<K, V> {
+    return ArrayMap<K, V>().also { map ->
         if (moveToFirst()) {
             for (index in 0 until this.count) {
-                list.add(block.invoke(this, index))
+                val result = block.invoke(this, index)
+                map[result.first] = result.second
                 if (!moveToNext()) break
             }
         }

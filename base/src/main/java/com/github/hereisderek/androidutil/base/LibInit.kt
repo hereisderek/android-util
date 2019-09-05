@@ -9,6 +9,7 @@ import android.os.StrictMode
 import com.github.hereisderek.androidutil.BuildConfig
 import com.github.hereisderek.androidutil.view.ViewUtil
 import com.github.hereisderek.androidutil.color.ColorUtil
+import com.github.hereisderek.androidutil.misc.initTimber
 import timber.log.Timber
 
 /**
@@ -22,7 +23,7 @@ import timber.log.Timber
 class LibInit : ContentProvider() {
 
     override fun onCreate(): Boolean {
-        setupTimber()
+        initTimber()
         context?.also {context ->
             ColorUtil.init(context)
             ViewUtil.init(context)
@@ -53,14 +54,7 @@ class LibInit : ContentProvider() {
 
     companion object {
         private val debugTree by lazy(LazyThreadSafetyMode.NONE) { Timber.DebugTree() }
-        private fun setupTimber(){
-            if (BuildConfig.DEBUG) {
-                if (Timber.treeCount() == 0) {
-                    Timber.plant(debugTree)
-                    Timber.d("Timber initialized")
-                }
-            }
-        }
+
 
         private fun setupStrickMode() {
             if (!BuildConfig.DEBUG) return
