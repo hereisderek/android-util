@@ -160,7 +160,7 @@ well, it's just like any other pool project, but it takes a generator object so 
 I'll probably add use cases later but I'm too lazy so I'll just paste a test case here instead (SynchronizedExpandablePool is the thread safe version of the same thing)
 
 ```kotlin
-@Test
+    @Test
     fun testTrim() {
         var index = 0
         val pool = SimpleExpandablePool{
@@ -181,7 +181,7 @@ you can also call `fun <R> use(block: (T) -> R): R` for temporary use (automatic
 also an extension method for creating a pool object
 
 ```kotlin
- @Test
+    @Test
     fun testCreation() {
         class DummyClass(val index : Int)
         var index = 0
@@ -204,10 +204,10 @@ a self-contained, reusable computed obj that only update when requested but mark
 
 
 ```kotlin
-import com.github.hereisderek.androidutil.obj.MutableObj
+    import com.github.hereisderek.androidutil.obj.MutableObj
 
-// probably not the best use case but this is what I have right now
-private val mViewCenterVO = MutableObj<PointF?>{
+    // probably not the best use case but this is what I have right now
+    private val mViewCenterVO = MutableObj<PointF?>{
         val laidOut = ViewCompat.isLaidOut(this)
         Timber.d("laidOut:$laidOut, width:${this.width}, height:${this.height}, isReady:$isReady")
         if (laidOut && isReady) {
@@ -220,6 +220,42 @@ private val mViewCenterVO = MutableObj<PointF?>{
 
 ```
 
+
+#### 7. Cursor operations (toArrayList & to Map)
+
+    * fun <T> Cursor.toArrayList(block: (Cursor) -> T): ArrayList<T> 
+    * fun Cursor.toArrayList(close: Boolean = false, block: (Cursor) -> T): ArrayList<T>
+    * fun <T> Cursor.toArrayListIndexed(close: Boolean = false, block: (Cursor, index: Int) -> T): ArrayList<T>
+    * fun <T> Cursor.toSelfArrayList(close: Boolean = false, block: Cursor.() -> T): ArrayList<T>
+    * Cursor.toSelfArrayListIndexed(close: Boolean = false, block: Cursor.(index: Int) -> T): ArrayList<T>
+    * fun <K, V> Cursor.toArrayMapIndexed(close: Boolean = false, block: (Cursor, index: Int) -> Pair<K, V>) : Map<K, V>
+    * fun <K, V> Cursor.toSelfArrayMapIndexed(close: Boolean = false, block: Cursor.(index: Int) -> Pair<K, V>) : Map<K, V>
+
+example:
+
+
+```kotlin
+    import com.github.hereisderek.androidutil.misc.toArrayList
+
+    /// read
+    fun getStatus(
+        table: TableClass,
+        msgId: String
+    ) : List<MsgStatus> = readableDatabase.use { db ->
+        db.query(true, table.tableName, null, "$KEY_MSG_ID=?", arrayOf(msgId), null, null, null, null)
+            .toArrayList(true) {
+                MsgStatus(
+                    table,
+                    getInt(getColumnIndex(KEY_ID)),
+                    getString(getColumnIndex(KEY_MSG_ID)),
+                    getString(getColumnIndex(KEY_BY)),
+                    getLong(getColumnIndex(VALUE_EVENT_SENT)),
+                    getLong(getColumnIndex(VALUE_EVENT_DELIVERED)),
+                    getLong(getColumnIndex(VALUE_EVENT_READ))
+                )
+            }
+    }
+```
  
 
 
