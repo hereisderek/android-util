@@ -23,6 +23,7 @@ import kotlinx.coroutines.CancellationException
 import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+import com.github.hereisderek.androidutil.misc.toArrayList
 import java.io.File
 
 
@@ -208,9 +209,8 @@ object BitmapUtil {
         sortOrder: String? = BitmapUtil.SortOrder.DATE_DEC.value,
         rootUri: ContentUri? = null,
         useBlock: (cursor: Cursor) -> T) : ArrayList<T> {
-        return getCursorForUriList(context, uris, projection, sortOrder, rootUri)?.use {
-            it.toArrayList(useBlock)
-        } ?: ArrayList()
+
+        return getCursorForUriList(context, uris, projection, sortOrder, rootUri)?.toArrayList(true, useBlock) ?: ArrayList()
     }
 
 

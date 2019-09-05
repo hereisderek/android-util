@@ -10,8 +10,31 @@ import androidx.collection.ArrayMap
  * Project: AndroidUtil
  */
 
+
+
+
+inline fun <T> Cursor.toArrayList(block: (Cursor) -> T): ArrayList<T>  = this.toArrayList(false, block)
+
+// for some reason @Overloads doesn't work here
+// @JvmOverloads
+inline fun <T> Cursor.toArrayList(close: Boolean = false, block: (Cursor) -> T): ArrayList<T> {
+    return arrayListOf<T>().also { list ->
+        try {
+            if (moveToFirst()) {
+                for (index in 0 until this.count) {
+                    list.add(block.invoke(this))
+                    if (!moveToNext()) break
+                }
+            }
+        } finally {
+            if (close) { close() }
+        }
+    }
+}
+
+
 @JvmOverloads
-inline fun <T> Cursor.toArrayListIndexed(close: Boolean = false, block: Cursor.(index: Int) -> T): ArrayList<T> {
+inline fun <T> Cursor.toArrayListIndexed(close: Boolean = false, block: (Cursor, index: Int) -> T): ArrayList<T> {
     return arrayListOf<T>().also { list ->
         try {
             if (moveToFirst()) {
@@ -27,9 +50,23 @@ inline fun <T> Cursor.toArrayListIndexed(close: Boolean = false, block: Cursor.(
 }
 
 
+@JvmOverloads
+inline fun <T> Cursor.toSelfArrayList(close: Boolean = false, block: Cursor.() -> T): ArrayList<T>
+    = this.toArrayList(close, block)
+
 
 @JvmOverloads
-fun <K, V> Cursor.toArrayMapIndexed(close: Boolean = false, block: Cursor.(index: Int) -> Pair<K, V>) : Map<K, V> {
+fun <T> Cursor.toSelfArrayListIndexed(close: Boolean = false, block: Cursor.(index: Int) -> T): ArrayList<T> {
+    return this.toSelfArrayListIndexed(close, block)
+}
+
+
+
+
+/// map
+
+@JvmOverloads
+inline fun <K, V> Cursor.toArrayMapIndexed(close: Boolean = false, block: (Cursor, index: Int) -> Pair<K, V>) : Map<K, V> {
     return ArrayMap<K, V>().also { map ->
         if (moveToFirst()) {
             for (index in 0 until this.count) {
@@ -41,3 +78,12 @@ fun <K, V> Cursor.toArrayMapIndexed(close: Boolean = false, block: Cursor.(index
         if (close) { close() }
     }
 }
+
+
+
+
+@JvmOverloads
+inline fun <K, V> Cursor.toSelfArrayMapIndexed(close: Boolean = false, block: Cursor.(index: Int) -> Pair<K, V>) : Map<K, V>
+    = this.toArrayMapIndexed(close, block)
+
+
