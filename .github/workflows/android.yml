@@ -15,5 +15,4 @@ jobs:
 
       - name: build
         uses: "vgaidarji/android-github-actions/build@v1.0.0"
-        run: ./gradlew build
-        
+        args: = "./gradlew testDebug"
