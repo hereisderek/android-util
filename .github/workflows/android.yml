@@ -1,30 +1,19 @@
-workflow "Build, Test and Distribute" {
-  on = "push"
-  resolves = "Check"
-}
+name: Android CI
 
-action "Build" {
-  uses = "vgaidarji/android-github-actions/build@v1.0.0"
-  # secrets = ["FABRIC_API_KEY", "FABRIC_API_SECRET"]
-  args = "./gradlew assembleDebug -PpreDexEnable=false"
-}
+on: [push]
 
-action "Check" {
-  needs = ["Build"]
-  uses = "vgaidarji/android-github-actions/build@v1.0.0"
-  # secrets = ["FABRIC_API_KEY", "FABRIC_API_SECRET"]
-  args = "./gradlew testDebug jacocoTestReport checkstyle pmd jdepend lintDebug buildDashboard -PpreDexEnable=false"
-}
+jobs:
+  build:
 
-action "Run UI Tests" {
-  needs = ["Build"]
-  # secrets = ["FABRIC_API_KEY", "FABRIC_API_SECRET"]
-  uses = "vgaidarji/android-github-actions/emulator@v1.0.0"
-}
+    runs-on: ubuntu-latest
 
-action "Publish Code Coverage" {
-  needs = ["Distribute"]
-  uses = "vgaidarji/android-github-actions/build@v1.0.0"
-  # secrets = ["COVERALLS_REPO_TOKEN"]
-  args = "./gradlew coveralls -PpreDexEnable=false"
-}
+    steps:
+      - name: check out
+        uses: actions/checkout@v1
+        with: 
+          fetch-depth: 1
+
+      - name: build
+        uses: "vgaidarji/android-github-actions/build@v1.0.0"
+        run: ./gradlew build
+        
