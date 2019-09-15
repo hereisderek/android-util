@@ -12,3 +12,5 @@
 .externalNativeBuild
 .cxx
 build/
+org.eclipse.buildship.core.prefs
+.project
