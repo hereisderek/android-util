@@ -29,7 +29,7 @@ open class SingleFragmentActivity : AppCompatActivity() {
 
         when {
             !fragmentName.isNullOrEmpty() -> supportFragmentManager.fragmentFactory.instantiate(classLoader, fragmentName)
-
+            // we can probably add other factory method in the future
             else -> {
                 Timber.e("Unable to instantiate fragment, empty fragment name")
                 setResult(Activity.RESULT_CANCELED)
@@ -45,11 +45,6 @@ open class SingleFragmentActivity : AppCompatActivity() {
     }
 
 
-    private fun a() {
-        val requestCode = SingleFragmentActivity.startForResult(this, Fragment::class.java){
-            putString("arg1", "arg1_value")
-        }
-    }
 
 
     companion object {
@@ -59,6 +54,7 @@ open class SingleFragmentActivity : AppCompatActivity() {
 
 
         // from fragments
+        @JvmOverloads
         fun <T : Fragment> start(
             host: Fragment,
             fragmentClass: Class<T>,
@@ -68,7 +64,7 @@ open class SingleFragmentActivity : AppCompatActivity() {
             start(host.requireContext(), fragmentClass, fragmentArguments, fragmentTag)
         }
 
-
+        @JvmOverloads
         fun <T : Fragment> startForResult(
             host: Fragment,
             fragmentClass: Class<T>,
@@ -81,6 +77,7 @@ open class SingleFragmentActivity : AppCompatActivity() {
 
 
         // from activities
+        @JvmOverloads
         fun <T : Fragment> start(
             context: Context,
             fragmentClass: Class<T>,
@@ -90,6 +87,7 @@ open class SingleFragmentActivity : AppCompatActivity() {
             context.startActivity(getIntent(context, fragmentClass, fragmentTag, fragmentArguments))
         }
 
+        @JvmOverloads
         fun <T : Fragment> startForResult(
             host: Activity,
             fragmentClass: Class<T>,
