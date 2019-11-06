@@ -18,5 +18,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/image_share" />
         </provider>
+
+        <activity android:name=".activity.SingleFragmentActivity" />
+
     </application>
 </manifest>

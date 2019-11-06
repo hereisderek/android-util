@@ -257,5 +257,15 @@ example:
     }
 ```
  
+#### 8. SingleFragmentActivity (you can override theme/style by adding the activity in your manifest file)
+To view other start options, see [here](base/src/main/java/com/github/hereisderek/androidutil/activity/SingleFragmentActivity.kt)
 
+```kotlin
+    // called from within an activity or a fragment for example
+    // you can use an auto generated requestCode, or specify yours
+    val requestCode = SingleFragmentActivity.startForResult(this, MyFragment::class.java){
+          putString("arg1", "arg1_value")
+    }
+
+```
 
