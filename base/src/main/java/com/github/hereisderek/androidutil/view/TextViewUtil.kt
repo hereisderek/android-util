@@ -41,6 +41,4 @@ fun TextView.setOnEditorActionListenerWithAction(
         }
         onEditorActionListener.invoke(view, actionId, event, buttonPressed)
     }
-
-
 }
