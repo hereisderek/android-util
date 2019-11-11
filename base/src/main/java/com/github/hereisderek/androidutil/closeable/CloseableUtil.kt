@@ -25,37 +25,34 @@ open class CloseableSafe <T : Closeable> (
     private val _closeable: T? = null
 ) : Closeable {
 
-    private var mCloseable: AtomicReference<T?> = AtomicReference()
-
-    private val closeable: T get() = mCloseable.get() ?: generator.invoke().also {
-        mCloseable.set(it)
+    private val closeable = lazy{
+        _closeable ?: generator.invoke()
     }
-    // private val closeable = lazy(generator)
 
-
-    val created : Boolean get() = mCloseable.get() != null
+    val created : Boolean get() = closeable.isInitialized()
 
     fun <R> useOrClose(
         close: Ternary = Ternary.Default,
         action: T.(willClose: Boolean) -> R
     ) : R {
-        val c = closeable
-        val willClose = close.value ?: created
-        return action.invoke(c, willClose).also {
+        val closeable = this.closeable.value
+        val willClose = close.value ?: _closeable == null
+
+        return action.invoke(closeable, willClose).also {
             if (willClose){
-                c.close()
+                closeable.close()
             }
         }
 
     }
 
-    fun get() : T = closeable
-
+    fun get() : T = closeable.value
 
 
     override fun close() {
-        _closeable?.close()
-        mCloseable.get()?.close()
+        if (closeable.isInitialized()){
+            closeable.value.close()
+        }
     }
 
     open fun closeQuiet(handler: ((Exception)->Unit)? = null) {
