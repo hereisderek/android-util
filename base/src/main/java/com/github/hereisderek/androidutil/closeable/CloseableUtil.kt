@@ -21,8 +21,8 @@ import java.util.concurrent.atomic.AtomicReference
 )
 @Suppress("MemberVisibilityCanBePrivate")
 open class CloseableSafe <T : Closeable> (
-    private val generator: ()-> T,
-    private val _closeable: T? = null
+    private val _closeable: T? = null,
+    private val generator: ()-> T
 ) : Closeable {
 
     private val closeable = lazy{

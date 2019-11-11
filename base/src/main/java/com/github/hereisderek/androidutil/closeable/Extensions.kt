@@ -25,13 +25,12 @@ fun Closeable?.closeQuiet(handler: ((Exception)->Unit)? = null) {
 /**
  *
  */
-fun <T> useOrCreateAndClose(
-    generator: ()-> Closeable,
-    _closeable: Closeable? = null,
-    action: Closeable.(created: Boolean)-> T
+fun <T, C : Closeable> C?.useOrCreateAndClose(
+    generator: ()-> C,
+    action: C.(created: Boolean)-> T
 ) : T {
-    val close = _closeable == null // we'll need to create it therefore we'll close it after using
-    val closeable = _closeable ?: generator.invoke()
+    val close = this == null // we'll need to create it therefore we'll close it after using
+    val closeable = this ?: generator.invoke()
     return action(closeable, !close).also {
         if (close) {
             closeable.closeQuiet()
