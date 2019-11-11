@@ -269,3 +269,25 @@ To view other start options, see [here](base/src/main/java/com/github/hereisdere
 
 ```
 
+
+
+
+#### 9. `fun useOrCreateAndClose()` and `Closeable?.closeQuiet()`
+
+##### 9.1 `fun useOrCreateAndClose()`
+
+```kotlin
+fun <T> useOrCreateAndClose(
+    generator: ()->Closeable,
+    _closeable: Closeable? = null,
+    action: Closeable.(created: Boolean)-> T
+) : T
+```
+
+To use an existing `Closeable` Object (such as `SQLiteDatabase`) or create a new one by invoking the generator, if it was from the generator, the newly created `Closeable` will be automatically closed after used,
+otherwise, you will also be given a chance to manually close it in the `action{}` (if you want to that is):
+this can be used for sharing the same database object on a chain of methods so we won't need to keep requesting new database object
+
+##### 9.2 `Closeable?.closeQuiet(handler: ((Exception)->Unit)? = null)`
+ 
+Just to close a `Closeable?` object quietly, pass along the exception to the handler or suppress it if none given 
