@@ -11,6 +11,7 @@ import java.io.Closeable
  */
 
 
+@JvmOverloads
 fun Closeable?.closeQuiet(handler: ((Exception)->Unit)? = null) {
     if (this == null) return
     try {
@@ -28,11 +29,21 @@ fun Closeable?.closeQuiet(handler: ((Exception)->Unit)? = null) {
 fun <T, C : Closeable> C?.useOrCreateAndClose(
     generator: ()-> C,
     action: C.(created: Boolean)-> T
+) : T = useOrCreateAndCloseJvm(this, generator, action)
+
+/**
+ * for calling from java code
+ */
+@JvmOverloads
+fun <T, C : Closeable> useOrCreateAndCloseJvm(
+    _closeable: C? = null,
+    generator: ()-> C,
+    action: C.(willClose: Boolean)-> T
 ) : T {
-    val close = this == null // we'll need to create it therefore we'll close it after using
-    val closeable = this ?: generator.invoke()
-    return action(closeable, !close).also {
-        if (close) {
+    val willClose = _closeable == null // we'll need to create it therefore we'll close it after using
+    val closeable = _closeable ?: generator.invoke()
+    return action(closeable, willClose).also {
+        if (willClose) {
             closeable.closeQuiet()
         }
     }

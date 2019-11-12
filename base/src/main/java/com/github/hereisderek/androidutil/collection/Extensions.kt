@@ -1,5 +1,6 @@
 package com.github.hereisderek.androidutil.collection
 
+import android.database.Cursor
 import androidx.collection.SimpleArrayMap
 import java.lang.IndexOutOfBoundsException
 
@@ -34,9 +35,12 @@ public inline fun <T, C : MutableCollection<in T>> List<T>.filterBackwardsTo(des
     return destination
 }
 
+/**
+ * floatArrayOf()
+ */
 fun FloatArray.set(vararg values: Float)  {
-    if (values.size > this.size) {
-        throw IndexOutOfBoundsException("values length is larger than destination array, ${values.size} vs ${this.size}")
+    require(this.size >= values.size){
+        "values length is larger than destination array, ${values.size} vs ${this.size}"
     }
     values.forEachIndexed { index, fl ->
         this[index] = fl
@@ -53,3 +57,33 @@ fun <K, V> SimpleArrayMap<K, V>.toKeyList() : List<K> {
     }
     return list
 }
+
+/*
+
+fun <T> Iterable<T>.toList(
+    from: Int = 0,
+    limit: Int = -1
+) : List<T>{
+    require(limit == -1 || limit >= 0)
+    if (limit == 0) return emptyList()
+
+    val iterator = iterator()
+    val list = ArrayList<T>()
+    for(i in 0 until Int.MAX_VALUE) {
+        if (iterator.hasNext()) {
+
+
+            val obj = iterator.next()
+
+
+
+            if (i >= from && (limit == -1 || i < limit + from)) {
+                list.add(obj)
+            }
+        } else {
+            return list
+        }
+    }
+    return list
+}
+*/

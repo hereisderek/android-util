@@ -10,23 +10,7 @@ import java.lang.Exception
  * Project: android-util
  */
 
-// class TransactionAbortException : RuntimeException()
-
-/*fun <T> SQLiteDatabase.transactionSafe(code: SQLiteDatabase.() -> T) : T? {
-    var t : T? = null
-    try {
-        beginTransaction()
-        t = code()
-        setTransactionSuccessful()
-    } catch (e: TransactionAbortException) {
-        // Do nothing, just stop the transaction
-    } finally {
-        endTransaction()
-    }
-    return t
-}*/
-
-
+@JvmOverloads
 fun <T> SQLiteDatabase.transaction(
     throwException: Boolean = false,
     code: SQLiteDatabase.() -> T
@@ -48,6 +32,7 @@ fun <T> SQLiteDatabase.transaction(
     return t
 }
 
+@JvmOverloads
 fun <T> SQLiteDatabase.transactionThrow(
     code: SQLiteDatabase.() -> T
 ) : T {

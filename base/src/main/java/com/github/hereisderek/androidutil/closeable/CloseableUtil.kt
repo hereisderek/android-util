@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicReference
  * NOT TESTED
  */
 @Deprecated(
-    "THIS IMPLEMENTATION HAS NOT BEEN TESTED, it might eat your cat",
+    "THIS IMPLEMENTATION HAS NOT BEEN TESTED, MIGHT EAT YOUR CAT!",
     level = DeprecationLevel.WARNING
 )
 @Suppress("MemberVisibilityCanBePrivate")
