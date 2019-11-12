@@ -41,8 +41,11 @@ fun <T> Cursor.toList(
         }
     } catch (e: Exception) {
     } finally {
-        if (close) closeQuiet()
-        moveToFirst()
+        if (close) {
+            closeQuiet()
+        } else {
+            moveToFirst()
+        }
     }
     return list
 }
