@@ -37,7 +37,7 @@ fun <T> Cursor.toList(
         for (i in from until endIndex){
             val obj = mapping.invoke(this, i)
             list.add(obj)
-            if (!moveToLast()) break
+            if (!moveToNext()) break
         }
     } catch (e: Exception) {
     } finally {
