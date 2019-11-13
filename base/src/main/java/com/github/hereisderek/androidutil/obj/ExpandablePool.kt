@@ -127,9 +127,11 @@ open class SimpleExpandablePool<T>(
 
     override fun trimToSize(size: Int): Int {
         when{
-            // no need further action
+            // no need for further action
             size >= this.size -> Unit
-            size < 0 -> throw IllegalArgumentException("The trimmed size must be >= 0")
+
+            // I guess there's no need to throw an exception here
+            size <= 0 -> mStorage.clear()
             else -> {
                 for (i in (this.size - 1) downTo size ) {
                     mStorage.removeAt(i)
@@ -189,6 +191,10 @@ open class SynchronizedExpandablePool<T>(
 
     override fun destroy() = synchronized(lock){
         super.destroy()
+    }
+
+    override fun trimToSize(size: Int): Int = synchronized(lock) {
+        return super.trimToSize(size)
     }
 }
 
