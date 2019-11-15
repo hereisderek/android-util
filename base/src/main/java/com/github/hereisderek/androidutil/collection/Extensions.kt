@@ -58,32 +58,3 @@ fun <K, V> SimpleArrayMap<K, V>.toKeyList() : List<K> {
     return list
 }
 
-/*
-
-fun <T> Iterable<T>.toList(
-    from: Int = 0,
-    limit: Int = -1
-) : List<T>{
-    require(limit == -1 || limit >= 0)
-    if (limit == 0) return emptyList()
-
-    val iterator = iterator()
-    val list = ArrayList<T>()
-    for(i in 0 until Int.MAX_VALUE) {
-        if (iterator.hasNext()) {
-
-
-            val obj = iterator.next()
-
-
-
-            if (i >= from && (limit == -1 || i < limit + from)) {
-                list.add(obj)
-            }
-        } else {
-            return list
-        }
-    }
-    return list
-}
-*/

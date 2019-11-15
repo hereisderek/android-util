@@ -291,3 +291,29 @@ this can be used for sharing the same database object on a chain of methods so w
 ##### 9.2 `Closeable?.closeQuiet(handler: ((Exception)->Unit)? = null)`
  
 Just to close a `Closeable?` object quietly, pass along the exception to the handler or suppress it if none given 
+
+
+
+#### 10. CollectionExt.flatMap() with CollectionExtKtTest.flatMapTo(ArrayList<R>(), byKey, transform) and others
+
+
+```
+val test = mapOf(
+    1 to intArrayOf(1, 2, 3, 4),
+    2 to intArrayOf(11, 12, 13, 14),
+    // note: map doesn't allow duplicated keys
+    // 2 to intArrayOf(18, 19, 17, 16),
+    4 to intArrayOf(1111, 2222, 3333, 4444),
+    5 to intArrayOf(5555)
+)
+
+val result = test.flatMap(
+    byKey = intArrayOf(2, 3).toTypedArray()
+){
+    ArrayList<Int>().apply {
+       addAll(it.component2().toTypedArray())
+    }
+}
+
+// result: 11, 12, 13, 14, 1, 2, 3, 4, 1111, 2222, 3333, 4444, 5555
+```
