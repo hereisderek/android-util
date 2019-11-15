@@ -19,7 +19,7 @@ buildscript {
 plugins {
     // https://github.com/jmfayard/buildSrcVersions
     // :refreshVersions :buildSrcVersions
-    id("de.fayard.refreshVersions") version "0.7.0"
+    id("de.fayard.refreshVersions") version "0.8.3"
 }
 
 allprojects {
