@@ -64,4 +64,4 @@ before_install:
     - yes | sdkmanager "build-tools;29.0.0"
 
 script:
-   - ./gradlew clean build
+   - ./gradlew clean :base:build
