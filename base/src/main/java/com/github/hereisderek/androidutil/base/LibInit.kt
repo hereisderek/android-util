@@ -6,10 +6,10 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.StrictMode
-import com.github.hereisderek.androidutil.BuildConfig
 import com.github.hereisderek.androidutil.view.ViewUtil
 import com.github.hereisderek.androidutil.color.ColorUtil
 import com.github.hereisderek.androidutil.misc.initTimber
+import com.github.hereisderek.androidutl.base.BuildConfig
 import timber.log.Timber
 
 /**
@@ -56,7 +56,7 @@ class LibInit : ContentProvider() {
         private val debugTree by lazy(LazyThreadSafetyMode.NONE) { Timber.DebugTree() }
 
 
-        private fun setupStrickMode() {
+        private fun setupStrictMode() {
             if (!BuildConfig.DEBUG) return
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                 .detectAll()

@@ -80,7 +80,7 @@ object ViewUtil {
                 when (action and MotionEvent.ACTION_MASK) {
                     MotionEvent.ACTION_POINTER_DOWN -> "ACTION_POINTER_DOWN($index)"
                     MotionEvent.ACTION_POINTER_UP -> "ACTION_POINTER_UP($index)"
-                    else -> Integer.toString(action)
+                    else -> action.toString()
                 }
             }
         }

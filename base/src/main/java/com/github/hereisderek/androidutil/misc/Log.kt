@@ -1,6 +1,6 @@
 package com.github.hereisderek.androidutil.misc
 
-import com.github.hereisderek.androidutil.BuildConfig
+import com.github.hereisderek.androidutl.base.BuildConfig
 import timber.log.Timber
 
 /**

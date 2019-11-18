@@ -32,7 +32,6 @@ fun <T> SQLiteDatabase.transaction(
     return t
 }
 
-@JvmOverloads
 fun <T> SQLiteDatabase.transactionThrow(
     code: SQLiteDatabase.() -> T
 ) : T {

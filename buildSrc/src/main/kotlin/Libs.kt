@@ -7,47 +7,123 @@ import kotlin.String
  *   `$ ./gradlew buildSrcVersions`
  */
 object Libs {
-    const val kotlinx_serialization_runtime: String =
-            "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.13.0"
-
+    /**
+     * https://github.com/Kotlin/kotlinx.coroutines
+     */
     const val kotlinx_coroutines_android: String =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.1"
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:" +
+            Versions.org_jetbrains_kotlinx_kotlinx_coroutines
 
-    const val kotlinx_coroutines_core: String =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.1"
+    /**
+     * https://github.com/Kotlin/kotlinx.coroutines
+     */
+    const val kotlinx_coroutines_core: String = "org.jetbrains.kotlinx:kotlinx-coroutines-core:" +
+            Versions.org_jetbrains_kotlinx_kotlinx_coroutines
 
-    const val kotlin_android_extensions: String =
-            "org.jetbrains.kotlin:kotlin-android-extensions:1.3.50"
+    /**
+     * https://github.com/Kotlin/kotlinx.serialization
+     */
+    const val kotlinx_serialization_runtime: String =
+            "org.jetbrains.kotlinx:kotlinx-serialization-runtime:" +
+            Versions.org_jetbrains_kotlinx_kotlinx_serialization
 
-    const val kotlin_android_extensions_runtime: String =
-            "org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.3.50"
+    /**
+     * https://developer.android.com/testing
+     */
+    const val androidx_test_ext_junit: String = "androidx.test.ext:junit:" +
+            Versions.androidx_test_ext_junit
 
-    const val kotlin_gradle_plugin: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.50"
+    const val com_android_tools_build_gradle: String = "com.android.tools.build:gradle:" +
+            Versions.com_android_tools_build_gradle
 
-    const val kotlin_stdlib: String = "org.jetbrains.kotlin:kotlin-stdlib:1.3.50"
+    /**
+     * http://junit.org
+     */
+    const val junit_junit: String = "junit:junit:" + Versions.junit_junit
 
-    const val com_android_tools_build_gradle: String = "com.android.tools.build:gradle:3.6.0-beta02"
+    /**
+     * https://developer.android.com/studio
+     */
+    const val aapt2: String = "com.android.tools.build:aapt2:" + Versions.aapt2
 
-    const val androidx_test_ext_junit: String = "androidx.test.ext:junit:1.1.1"
+    /**
+     * https://developer.android.com/jetpack/androidx
+     */
+    const val appcompat: String = "androidx.appcompat:appcompat:" + Versions.appcompat
 
-    const val junit_junit: String = "junit:junit:4.12"
+    /**
+     * http://developer.android.com/tools/extras/support-library.html
+     */
+    const val core_ktx: String = "androidx.core:core-ktx:" + Versions.core_ktx
 
     const val de_fayard_refreshversions_gradle_plugin: String =
-            "de.fayard.refreshVersions:de.fayard.refreshVersions.gradle.plugin:0.7.0"
+            "de.fayard.refreshVersions:de.fayard.refreshVersions.gradle.plugin:" +
+            Versions.de_fayard_refreshversions_gradle_plugin
 
-    const val espresso_core: String = "androidx.test.espresso:espresso-core:3.2.0"
+    /**
+     * https://github.com/google/desugar_jdk_libs
+     */
+    const val desugar_jdk_libs: String = "com.android.tools:desugar_jdk_libs:" +
+            Versions.desugar_jdk_libs
 
-    const val exifinterface: String = "androidx.exifinterface:exifinterface:1.1.0-beta01"
+    /**
+     * http://r8.googlesource.com/r8
+     */
+    const val desugar_jdk_libs_configuration: String =
+            "com.android.tools:desugar_jdk_libs_configuration:" +
+            Versions.desugar_jdk_libs_configuration
 
-    const val lint_gradle: String = "com.android.tools.lint:lint-gradle:26.6.0-beta02"
+    /**
+     * https://developer.android.com/testing
+     */
+    const val espresso_core: String = "androidx.test.espresso:espresso-core:" +
+            Versions.espresso_core
 
-    const val viewpager2: String = "androidx.viewpager2:viewpager2:1.0.0-beta04"
+    /**
+     * http://developer.android.com/tools/extras/support-library.html
+     */
+    const val exifinterface: String = "androidx.exifinterface:exifinterface:" +
+            Versions.exifinterface
 
-    const val appcompat: String = "androidx.appcompat:appcompat:1.1.0"
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_android_extensions: String =
+            "org.jetbrains.kotlin:kotlin-android-extensions:" + Versions.kotlin_android_extensions
 
-    const val core_ktx: String = "androidx.core:core-ktx:1.1.0"
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_android_extensions_runtime: String =
+            "org.jetbrains.kotlin:kotlin-android-extensions-runtime:" +
+            Versions.kotlin_android_extensions_runtime
 
-    const val timber: String = "com.jakewharton.timber:timber:4.7.1"
+    const val kotlin_gradle_plugin: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:" +
+            Versions.kotlin_gradle_plugin
 
-    const val aapt2: String = "com.android.tools.build:aapt2:3.6.0-beta02-5836729"
+    const val kotlin_serialization: String = "org.jetbrains.kotlin:kotlin-serialization:" +
+            Versions.kotlin_serialization
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_stdlib: String = "org.jetbrains.kotlin:kotlin-stdlib:" + Versions.kotlin_stdlib
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_stdlib_jdk7: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:" +
+            Versions.kotlin_stdlib_jdk7
+
+    /**
+     * https://developer.android.com/studio
+     */
+    const val lint_gradle: String = "com.android.tools.lint:lint-gradle:" + Versions.lint_gradle
+
+    /**
+     * https://github.com/JakeWharton/timber
+     */
+    const val timber: String = "com.jakewharton.timber:timber:" + Versions.timber
+
+    const val viewpager2: String = "androidx.viewpager2:viewpager2:" + Versions.viewpager2
 }

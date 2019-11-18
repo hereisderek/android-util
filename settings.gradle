@@ -1,2 +1,0 @@
-include ':base'
-rootProject.name='android-util'

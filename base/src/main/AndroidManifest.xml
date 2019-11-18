@@ -1,25 +1,2 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.hereisderek.androidutil" >
-
-    <application>
-        <provider
-            android:name=".base.LibInit"
-            android:authorities="${applicationId}.libinitprovider"
-            android:enabled="true"
-            android:exported="false" />
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.images_provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/image_share" />
-        </provider>
-
-        <activity android:name=".activity.SingleFragmentActivity" />
-
-    </application>
-</manifest>
+    package="com.github.hereisderek.androidutl.base" />

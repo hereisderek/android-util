@@ -5,7 +5,7 @@ import android.graphics.Color
 import androidx.annotation.ColorInt
 import androidx.annotation.IntRange
 import androidx.core.graphics.ColorUtils
-import com.github.hereisderek.androidutil.R
+import com.github.hereisderek.androidutl.base.R
 import timber.log.Timber
 
 /**
