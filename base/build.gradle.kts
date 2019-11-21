@@ -17,8 +17,8 @@ android {
         minSdkVersion(23)
         targetSdkVersion(29)
         targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "0.2.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -54,3 +54,32 @@ dependencies {
     androidTestImplementation (Libs.androidx_test_ext_junit)
     androidTestImplementation (Libs.espresso_core)
 }
+project.ext.apply {
+    val mavSiteUrl = "https://github.com/hereisderek/android-util"
+    set("mavSiteUrl", mavSiteUrl)
+    set("mavGitUrl", "$mavSiteUrl.git")
+    set("mavProjectName", "android-util")
+    set("mavPublishToMavenLocal", true)
+    set("mavLibraryLicenses", mapOf("Apache-2.0" to "http://www.apache.org/licenses/LICENSE-2.0.txt"))
+    set("mavLibraryDescription", "A collection of android utilies")
+
+}
+
+ext.set("version", android.defaultConfig.versionName)
+
+apply(from = "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle")
+
+/*
+project.ext {
+    mavSiteUrl = "https://github.com/hereisderek/android-util"
+    mavGitUrl = mavSiteUrl + '.git'
+    mavProjectName = 'android-util'
+    mavPublishToMavenLocal = true
+    mavLibraryLicenses = ["Apache-2.0":'http://www.apache.org/licenses/LICENSE-2.0.txt']
+    mavLibraryDescription = "A collection of android utilies"
+}
+
+version = android.defaultConfig.versionName
+
+apply from: 'https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle'
+*/

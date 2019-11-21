@@ -24,7 +24,8 @@ fun Closeable?.closeQuiet(handler: ((Exception)->Unit)? = null) {
 
 
 /**
- *
+ * Note for database:
+ *  https://stackoverflow.com/questions/6608498/best-place-to-close-database-connection
  */
 fun <T, C : Closeable> C?.useOrCreateAndClose(
     generator: ()-> C,

@@ -4,6 +4,7 @@ package com.github.hereisderek.androidutil.misc
 
 import android.content.Context
 import android.graphics.RectF
+import android.os.Build
 import android.os.Looper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -99,7 +100,13 @@ fun RectF.covers(x: Float, y: Float): Boolean {
 
 
 /* thread */
-inline val isOnMainThread get() = Looper.myLooper() == Looper.getMainLooper()
+inline val isOnMainThread2 get() = Looper.myLooper() == Looper.getMainLooper()
+
+inline val isOnMainThread: Boolean get() = Thread.currentThread() == Looper.getMainLooper().thread
+
+inline val isOnMainThread3 get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+    Looper.getMainLooper().isCurrentThread else Thread.currentThread() === Looper.getMainLooper().thread
+
 
 inline val threadName get() = Thread.currentThread().name
 
