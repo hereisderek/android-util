@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 
 plugins {
@@ -54,6 +55,7 @@ dependencies {
     androidTestImplementation (Libs.androidx_test_ext_junit)
     androidTestImplementation (Libs.espresso_core)
 }
+
 project.ext.apply {
     val mavSiteUrl = "https://github.com/hereisderek/android-util"
     set("mavSiteUrl", mavSiteUrl)
@@ -61,25 +63,12 @@ project.ext.apply {
     set("mavProjectName", "android-util")
     set("mavPublishToMavenLocal", true)
     set("mavLibraryLicenses", mapOf("Apache-2.0" to "http://www.apache.org/licenses/LICENSE-2.0.txt"))
-    set("mavLibraryDescription", "A collection of android utilies")
+    set("mavLibraryDescription", "A collection of android utilities")
 
 }
 
-ext.set("version", android.defaultConfig.versionName)
+
+version = android.defaultConfig.versionName as String
 
 apply(from = "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle")
 
-/*
-project.ext {
-    mavSiteUrl = "https://github.com/hereisderek/android-util"
-    mavGitUrl = mavSiteUrl + '.git'
-    mavProjectName = 'android-util'
-    mavPublishToMavenLocal = true
-    mavLibraryLicenses = ["Apache-2.0":'http://www.apache.org/licenses/LICENSE-2.0.txt']
-    mavLibraryDescription = "A collection of android utilies"
-}
-
-version = android.defaultConfig.versionName
-
-apply from: 'https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle'
-*/

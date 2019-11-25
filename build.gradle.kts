@@ -10,8 +10,9 @@ plugins {
     // id("se.patrikerdes.use-latest-versions") version Versions.se_patrikerdes_use_latest_versions_gradle_plugin
     // id("com.github.ben-manes.versions") version Versions.com_github_ben_manes_versions_gradle_plugin
     // id("org.jetbrains.gradle.plugin.idea-ext") version "0.4.2"
-    kotlin("multiplatform") version "1.3.50"
-    kotlin("plugin.serialization") version "1.3.50"
+    // kotlin("multiplatform") version "1.3.50"
+    kotlin("plugin.serialization") version Versions.kotlin_serialization
+    // kotlin("jvm")
 }
 
 
@@ -27,11 +28,14 @@ buildscript {
         classpath(Libs.com_android_tools_build_gradle)
         // classpath ("com.android.tools.build:gradle:4.0.0-alpha03")
         // classpath(kotlin("gradle-plugin", version = "1.3.60"))
+        // kotlinCompilerClasspath(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
+        // kotlinCompilerPluginClasspath(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
     }
 
     repositories {
         google()
         jcenter()
+        mavenCentral()
         maven (url = "https://dl.bintray.com/kotlin/kotlin-eap")
         maven("https://kotlin.bintray.com/kotlinx")
         maven("https://jitpack.io")
@@ -49,9 +53,11 @@ subprojects {
     }
 }
 
-// tasks.register("clean", Delete::class) {
-//     delete(rootProject.buildDir)
-// }
+/*
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
+}
+*/
 
 
 buildSrcVersions {
