@@ -2,6 +2,7 @@ package com.github.hereisderek.androidutil.misc
 
 import android.database.Cursor
 import androidx.collection.ArrayMap
+import com.github.hereisderek.androidutil.closeable.closeQuiet
 
 /**
  *
@@ -55,15 +56,39 @@ inline fun <T> Cursor.toSelfArrayList(close: Boolean = false, block: Cursor.() -
     = this.toArrayList(close, block)
 
 
+/**
+ * the same as Cursor.toSelfArrayList but using this for the cursor
+ */
 @JvmOverloads
 fun <T> Cursor.toSelfArrayListIndexed(close: Boolean = false, block: Cursor.(index: Int) -> T): ArrayList<T> {
     return this.toSelfArrayListIndexed(close, block)
 }
 
+inline fun Cursor.forEachIndexed(close: Boolean = false, block: (cursor: Cursor, index: Int) -> Unit) {
+    check(!this.isClosed) { "Cursor has already been closed" }
+    if (moveToFirst()) {
+        for (index in 0 until this.count) {
+            block.invoke(this, index)
+            if (!moveToNext()) break
+        }
+    }
+    if (close) { closeQuiet() }
+}
 
+inline fun Cursor.forEachIndexedSelf(close: Boolean = false, block: Cursor.(index: Int) -> Unit) {
+    check(!this.isClosed) { "Cursor has already been closed" }
+    if (moveToFirst()) {
+        for (index in 0 until this.count) {
+            block.invoke(this, index)
+            if (!moveToNext()) break
+        }
+    }
+    if (close) { closeQuiet() }
+}
 
 
 /// map
+
 
 @JvmOverloads
 inline fun <K, V> Cursor.toArrayMapIndexed(close: Boolean = false, block: (Cursor, index: Int) -> Pair<K, V>) : Map<K, V> {
@@ -86,4 +111,28 @@ inline fun <K, V> Cursor.toArrayMapIndexed(close: Boolean = false, block: (Curso
 inline fun <K, V> Cursor.toSelfArrayMapIndexed(close: Boolean = false, block: Cursor.(index: Int) -> Pair<K, V>) : Map<K, V>
     = this.toArrayMapIndexed(close, block)
 
+
+// parsing
+
+private inline fun <T> getOrNull(cursor: Cursor, columnIndex: Int): T? =
+    if (columnIndex in 0 until cursor.columnCount) {
+        when (val type = cursor.getType(columnIndex)) {
+            Cursor.FIELD_TYPE_INTEGER -> cursor.getLong(columnIndex)
+            Cursor.FIELD_TYPE_FLOAT -> cursor.getFloat(columnIndex)
+            Cursor.FIELD_TYPE_STRING -> cursor.getString(columnIndex)
+            Cursor.FIELD_TYPE_BLOB -> cursor.getBlob(columnIndex)
+            else -> null
+        } as? T
+    } else { null }
+
+// private inline fun <T> parseIfHas(cursor: Cursor, columnIndex: Int, operation: (index: Int)->T) : T?
+//         = if (columnIndex in 0 until cursor.columnCount){ operation.invoke(columnIndex) } else null
+//
+// private fun parseLong(cursor: Cursor, columnIndex: Int) = parseIfHas(cursor, columnIndex, cursor::getLong)
+//
+// private fun parseString(cursor: Cursor, columnIndex: Int) = parseIfHas(cursor, columnIndex, cursor::getString)
+//
+// private fun parseInt(cursor: Cursor, columnIndex: Int) = parseIfHas(cursor, columnIndex, cursor::getInt)
+//
+// private fun parseShort(cursor: Cursor, columnIndex: Int) = parseIfHas(cursor, columnIndex, cursor::getShort)
 

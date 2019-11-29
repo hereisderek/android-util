@@ -11,12 +11,3 @@ import java.io.Closeable
  * Project: Imagician Demo
  */
 
-
-
-
-
-/*
-fun <T> T?.useOrNull() {
-    if (this == null) return null
-
-}*/

@@ -47,6 +47,13 @@ object UriUtil {
         return Uri.parse(uri)
     }
 
+    fun parseOrNull(uriStr: String?) : Uri? = try {
+        if (uriStr.isNullOrEmpty()) null
+        else Uri.parse(uriStr)
+    } catch (e: Exception) {
+        null
+    }
+
     fun toUriFromAssetName(assetName: String) =
         toUriFromString(ASSET_SCHEME + assetName)
 
