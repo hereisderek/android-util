@@ -105,7 +105,7 @@ inline fun <K, V> Cursor.toArrayMapIndexed(close: Boolean = false, block: (Curso
 }
 
 
-
+val Cursor?.isNullOrEmpty get() = this == null || this.count == 0
 
 @JvmOverloads
 inline fun <K, V> Cursor.toSelfArrayMapIndexed(close: Boolean = false, block: Cursor.(index: Int) -> Pair<K, V>) : Map<K, V>

@@ -10,55 +10,50 @@ import kotlin.String
  * YOU are responsible for updating manually the dependency version.
  */
 object Versions {
-    const val org_jetbrains_kotlinx_kotlinx_coroutines: String = "1.3.2"
+    const val org_jetbrains_kotlinx_kotlinx_coroutines: String = "1.3.2-1.3.60"
 
     const val org_jetbrains_kotlinx_kotlinx_serialization: String = "0.14.0-1.3.60-eap-76"
 
     const val androidx_test_ext_junit: String = "1.1.1"
 
-    const val com_android_tools_build_gradle: String = "3.6.0-beta04"//"4.0.0-alpha04"
-    // const val com_android_tools_build_gradle: String = "4.0.0-alpha04"
+    const val com_android_tools_build_gradle: String = "3.6.0-beta05"
 
     const val junit_junit: String = "4.12"
 
-    const val aapt2: String = "4.0.0-alpha03-5910961"
+    const val aapt2: String = "3.6.0-beta05-5836729"
 
     const val appcompat: String = "1.1.0"
 
     const val core_ktx: String = "1.1.0"
 
-    const val de_fayard_refreshversions_gradle_plugin: String = "0.7.0" // available: "0.8.4"
-
-    const val desugar_jdk_libs: String = "1.0.1"
-
-    const val desugar_jdk_libs_configuration: String = "0.5.0"
+    const val de_fayard_refreshversions_gradle_plugin: String = "0.7.0" // available: "0.8.6"
 
     const val espresso_core: String = "3.2.0"
 
-    const val exifinterface: String = "1.1.0-rc01"
+    const val exifinterface: String = "1.1.0"
 
-    const val kotlin_android_extensions: String = "1.3.60"
+    const val kotlin_android_extensions: String = "1.3.61"
 
-    const val kotlin_android_extensions_runtime: String = "1.3.60"
+    const val kotlin_android_extensions_runtime: String = "1.3.61"
 
-    const val kotlin_gradle_plugin: String = "1.3.50"
+    const val kotlin_gradle_plugin: String = "1.3.61"
 
-    const val kotlin_serialization: String = "1.3.50"
+    const val kotlin_serialization: String = "1.3.61"
 
-    const val kotlin_stdlib: String = "1.3.60"
+    const val kotlin_stdlib: String = "1.3.61"
 
-    const val kotlin_stdlib_jdk7: String = "1.3.50"
+    const val lint_gradle: String = "26.6.0-beta05"
 
-    const val lint_gradle: String = "27.0.0-alpha03"
+    const val org_jetbrains_kotlin_plugin_serialization_gradle_plugin: String = "1.3.61"
 
     const val timber: String = "4.7.1"
 
-    const val viewpager2: String = "1.0.0-rc01"
+    const val viewpager2: String = "1.0.0"
 
     /**
-     * Current version: "6.0"
+     * Current version: "6.0.1"
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19
      */
-    const val gradleLatestVersion: String = "6.0"
+    const val gradleLatestVersion: String = "6.0.1"
 }

@@ -1,5 +1,7 @@
 package com.github.hereisderek.androidutil.obj
 
+import kotlin.reflect.KProperty
+
 /**
  *
  * User: derekzhu
@@ -42,6 +44,8 @@ class MutableObj<T>(
     val value get() = get()
 
     private var currentValue : T? = null
+
+    operator fun getValue(thisRef: Any?, prop: KProperty<*>): T = get()
 
     fun dirty() {
         // we save the dirty to a local variable so in onDirty block if the user

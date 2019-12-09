@@ -61,26 +61,13 @@ object Libs {
             Versions.de_fayard_refreshversions_gradle_plugin
 
     /**
-     * https://github.com/google/desugar_jdk_libs
-     */
-    const val desugar_jdk_libs: String = "com.android.tools:desugar_jdk_libs:" +
-            Versions.desugar_jdk_libs
-
-    /**
-     * http://r8.googlesource.com/r8
-     */
-    const val desugar_jdk_libs_configuration: String =
-            "com.android.tools:desugar_jdk_libs_configuration:" +
-            Versions.desugar_jdk_libs_configuration
-
-    /**
      * https://developer.android.com/testing
      */
     const val espresso_core: String = "androidx.test.espresso:espresso-core:" +
             Versions.espresso_core
 
     /**
-     * http://developer.android.com/tools/extras/support-library.html
+     * https://developer.android.com/jetpack/androidx
      */
     const val exifinterface: String = "androidx.exifinterface:exifinterface:" +
             Versions.exifinterface
@@ -110,20 +97,21 @@ object Libs {
     const val kotlin_stdlib: String = "org.jetbrains.kotlin:kotlin-stdlib:" + Versions.kotlin_stdlib
 
     /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_stdlib_jdk7: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:" +
-            Versions.kotlin_stdlib_jdk7
-
-    /**
      * https://developer.android.com/studio
      */
     const val lint_gradle: String = "com.android.tools.lint:lint-gradle:" + Versions.lint_gradle
+
+    const val org_jetbrains_kotlin_plugin_serialization_gradle_plugin: String =
+            "org.jetbrains.kotlin.plugin.serialization:org.jetbrains.kotlin.plugin.serialization.gradle.plugin:" +
+            Versions.org_jetbrains_kotlin_plugin_serialization_gradle_plugin
 
     /**
      * https://github.com/JakeWharton/timber
      */
     const val timber: String = "com.jakewharton.timber:timber:" + Versions.timber
 
+    /**
+     * https://developer.android.com/jetpack/androidx
+     */
     const val viewpager2: String = "androidx.viewpager2:viewpager2:" + Versions.viewpager2
 }

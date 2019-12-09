@@ -3,7 +3,10 @@ package com.github.hereisderek.androidutil.misc
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Context
+import android.content.res.Resources
 import android.net.Uri
+import androidx.annotation.AnyRes
+import androidx.annotation.NonNull
 import timber.log.Timber
 
 /**
@@ -32,9 +35,27 @@ object UriUtil {
 
     fun getType(uri: Uri) = uri.uriType
 
-    fun toUriFromResourceId(resId: Int, context: Context) : Uri {
+
+
+    fun getResUri2(resId: Int, context: Context) : Uri {
         return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + resId)
     }
+
+    /**
+     * get uri to any resource type
+     * @param context - context
+     * @param resId - resource id
+     * @throws Resources.NotFoundException if the given ID does not exist.
+     * @return - Uri to resource by given id
+     */
+    @Throws(Resources.NotFoundException::class)
+    fun getResUri(@NonNull context: Context, @AnyRes resId: Int): Uri {
+        /** Return a Resources instance for your application's package.  */
+        val res: Resources = context.resources
+        /** return uri  */
+        return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + res.getResourcePackageName(resId) + '/' + res.getResourceTypeName(resId) + '/' + res.getResourceEntryName(resId))
+    }
+
 
     fun toUriFromString(uriStr: String) : Uri {
         var uri = uriStr

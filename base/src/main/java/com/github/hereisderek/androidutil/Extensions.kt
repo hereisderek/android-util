@@ -11,3 +11,4 @@ import java.io.Closeable
  * Project: Imagician Demo
  */
 
+inline fun <reified T: Any> javaClass(): Class<T> = T::class.java
