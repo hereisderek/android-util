@@ -15,11 +15,11 @@ android {
     compileSdkVersion(29)
 
     defaultConfig {
-        minSdkVersion(23)
+        minSdkVersion(16)
         targetSdkVersion(29)
         targetSdkVersion(29)
         versionCode = 3
-        versionName = "0.2.5"
+        versionName = "0.2.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
