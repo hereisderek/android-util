@@ -3,6 +3,8 @@ package com.github.hereisderek.androidutil.collection
 import android.database.Cursor
 import androidx.collection.SimpleArrayMap
 import java.lang.IndexOutOfBoundsException
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  *
@@ -25,6 +27,17 @@ fun <T> List<T>.toArrayList(): ArrayList<T> = this as? ArrayList<T> ?: ArrayList
 public inline fun <T> List<T>.filterBackwards(predicate: (T) -> Boolean): List<T> {
     return filterTo(ArrayList(), predicate)
 }
+
+/**
+ * @param size: size of the items
+ */
+public fun <T> List<T>.take(size: Int = -1, skip: Int = 0): List<T> {
+    val actualStart = max(skip, 0)
+    val end = min(this.size, actualStart + size)
+    return subList(actualStart, end)
+}
+
+
 
 public inline fun <T, C : MutableCollection<in T>> List<T>.filterBackwardsTo(destination: C, predicate: (T) -> Boolean): C {
     val iterator = this.listIterator(size)
