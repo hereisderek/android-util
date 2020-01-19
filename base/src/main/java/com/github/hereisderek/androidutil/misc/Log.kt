@@ -1,5 +1,6 @@
 package com.github.hereisderek.androidutil.misc
 
+import com.github.hereisderek.androidutil.base.LibInit
 import com.github.hereisderek.androidutl.base.BuildConfig
 import timber.log.Timber
 
@@ -10,13 +11,6 @@ import timber.log.Timber
  * Project: Safety Net
  */
 
-private val debugTree by lazy(LazyThreadSafetyMode.NONE) { Timber.DebugTree() }
 
-fun initTimber(enable: Boolean = BuildConfig.DEBUG){
-    if (enable) {
-        if (Timber.treeCount() == 0) {
-            Timber.plant(debugTree)
-            Timber.d("Timber initialized")
-        }
-    }
-}
+@Deprecated("use LibInit.initTimber", replaceWith = ReplaceWith("LibInit.initTimber"))
+fun initTimber(enable: Boolean = BuildConfig.DEBUG) = LibInit.initTimber(enable)

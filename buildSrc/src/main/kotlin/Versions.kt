@@ -10,7 +10,7 @@ import kotlin.String
  * YOU are responsible for updating manually the dependency version.
  */
 object Versions {
-    const val org_jetbrains_kotlinx_kotlinx_coroutines: String = "1.3.2-1.3.60"
+    const val org_jetbrains_kotlinx_kotlinx_coroutines: String = "1.3.3"
 
     const val org_jetbrains_kotlinx_kotlinx_serialization: String = "0.14.0-1.3.60-eap-76"
 
@@ -55,5 +55,5 @@ object Versions {
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19
      */
-    const val gradleLatestVersion: String = "6.0.1"
+    const val gradleLatestVersion: String = "6.1"
 }

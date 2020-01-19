@@ -37,10 +37,10 @@ tasks.withType<KotlinCompile> {
 }
 
 dependencies {
-    // implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
-    // implementation (kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
+    implementation (kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     // implementation (Kotlin.stdlibJdk7)
-    implementation (Libs.kotlin_stdlib)
+    // implementation (Libs.kotlin_stdlib)
     implementation (Libs.timber)
     implementation (Libs.appcompat)
     implementation (Libs.core_ktx)
@@ -64,7 +64,6 @@ project.ext.apply {
     set("mavPublishToMavenLocal", true)
     set("mavLibraryLicenses", mapOf("Apache-2.0" to "http://www.apache.org/licenses/LICENSE-2.0.txt"))
     set("mavLibraryDescription", "A collection of android utilities")
-
 }
 
 
