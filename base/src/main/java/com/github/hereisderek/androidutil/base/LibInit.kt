@@ -31,7 +31,7 @@ class LibInit : StubContentProvider() {
 
         return false
     }
-    
+
     companion object {
         private val debugTree by lazy(LazyThreadSafetyMode.NONE) { Timber.DebugTree() }
 
