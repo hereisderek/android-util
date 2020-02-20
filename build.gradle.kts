@@ -25,8 +25,8 @@ buildscript {
     dependencies {
         classpath(Libs.kotlin_serialization)
         classpath(Libs.kotlin_gradle_plugin)
-        classpath(Libs.com_android_tools_build_gradle)
-        // classpath ("com.android.tools.build:gradle:4.0.0-alpha03")
+        // classpath(Libs.com_android_tools_build_gradle)
+        classpath ("com.android.tools.build:gradle:4.0.0-alpha09")
         // classpath(kotlin("gradle-plugin", version = "1.3.60"))
         // kotlinCompilerClasspath(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
         // kotlinCompilerPluginClasspath(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))

@@ -1,10 +1,10 @@
 rootProject.name = "android-util"
 
 include(
-    ":app", ":base"
+    ":app", ":base", ":recyclerview"
 )
 
-// project(":util").projectDir = File(settingsDir, "util/base")
+// project(":base").projectDir = File(rootDir, "base")
 
 
 // ./settings.gradle.kts

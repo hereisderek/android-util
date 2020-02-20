@@ -16,7 +16,7 @@ object Versions {
 
     const val androidx_test_ext_junit: String = "1.1.1"
 
-    const val com_android_tools_build_gradle: String = "3.6.0-beta05"
+    const val com_android_tools_build_gradle: String = "3.6.0-rc03"
 
     const val junit_junit: String = "4.12"
 
