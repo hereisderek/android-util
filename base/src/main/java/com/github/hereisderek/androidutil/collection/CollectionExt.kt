@@ -62,4 +62,43 @@ public inline fun <K, V, R, C : MutableCollection<in R>> Map<out K, V>.flatMapTo
     return destination
 }
 
+/**
+ * check if a collection contains any of the element in @param elements
+ */
+fun <E> Collection<E>.containsAnyOf(vararg elements: E): Boolean {
+    return this.any { it in elements }
+}
+
+
+inline fun <K, V, R> Map<out K, V>.mapNotNullValues(transform: (Map.Entry<K, V>) -> R?): Map<K, R> =
+    entries.associateByNotNull({ it.key }, transform)
+
+inline fun <T, K, V> Iterable<T>.associateByNotNull(keySelector: (T) -> K?, valueTransform: (T) -> V?): Map<K, V> {
+    val capacity = if (this is Collection<*>) this.size else 16
+    return associateByToNotNull(LinkedHashMap(capacity), keySelector, valueTransform)
+}
+
+inline fun <T, K, V, M : MutableMap<in K, in V>> Iterable<T>.associateByToNotNull(
+    destination: M,
+    keySelector: (T) -> K?,
+    valueTransform: (T) -> V?
+): M {
+    for (element in this) {
+        val key = keySelector(element) ?: continue
+        val value = valueTransform(element) ?: continue
+        destination.put(key, value)
+    }
+    return destination
+}
+
+fun <T> Iterable<T>.collectionSizeOrDefault(default: Int): Int = if (this is Collection<*>) this.size else default
+
+inline fun <K, V> Iterable<K>.associateWithNotNull(valueSelector: (K) -> V?): Map<K, V> = associateWithNotNullTo(LinkedHashMap(collectionSizeOrDefault(10)), valueSelector)
+
+inline fun <K, V, M : MutableMap<in K, in V>> Iterable<K>.associateWithNotNullTo(destination: M, valueSelector: (K) -> V?): M {
+    for(e in this) {
+        valueSelector(e)?.also { destination.put(e, it) }
+    }
+    return destination
+}
 
