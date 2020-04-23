@@ -1,6 +1,7 @@
 package com.github.hereisderek.androidutil.recyclerview
 
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
 
 /**
@@ -12,6 +13,6 @@ import android.view.View
 
 
 @Suppress("UNCHECKED_CAST")
-class ViewHolder<T : View> (view: T) : RecyclerView.ViewHolder(view){
+class ViewHolder<out T : View> (view: T) : RecyclerView.ViewHolder(view){
     fun <T> getItemView() = itemView as T
 }

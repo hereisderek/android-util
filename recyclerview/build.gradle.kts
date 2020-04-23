@@ -72,16 +72,14 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
-    // implementation (project(":base"))
+    implementation (Libs.kotlin_stdlib)
+    implementation (Libs.timber)
+    implementation (Libs.appcompat)
+    implementation (Libs.core_ktx)
+    implementation (Libs.recyclerview)
 
-    implementation(Libs.kotlin_stdlib)
-    implementation(Libs.timber)
-    implementation(Libs.appcompat)
-    implementation(Libs.core_ktx)
-    implementation("androidx.recyclerview:recyclerview:1.1.0")
-    implementation("androidx.recyclerview:recyclerview-selection:1.1.0-rc01")
-
-    testImplementation (Libs.junit_junit)
-    // androidTestImplementation (Libs.androidx_test_ext_junit)
-    // androidTestImplementation (Libs.espresso_core)
+    testImplementation ("junit:junit:4.13")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.1")
+    androidTestImplementation ("androidx.test.ext:junit-ktx:1.1.1")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.2.0")
 }

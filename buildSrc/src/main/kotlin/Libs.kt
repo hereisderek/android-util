@@ -8,6 +8,42 @@ import kotlin.String
  */
 object Libs {
     /**
+     * https://developer.android.com/testing
+     */
+    const val androidx_test_ext_junit: String = "androidx.test.ext:junit:" +
+            Versions.androidx_test_ext
+
+    /**
+     * https://developer.android.com/testing
+     */
+    const val junit_ktx: String = "androidx.test.ext:junit-ktx:" + Versions.androidx_test_ext
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_android_extensions: String =
+            "org.jetbrains.kotlin:kotlin-android-extensions:" + Versions.org_jetbrains_kotlin
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_android_extensions_runtime: String =
+            "org.jetbrains.kotlin:kotlin-android-extensions-runtime:" +
+            Versions.org_jetbrains_kotlin
+
+    const val kotlin_gradle_plugin: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:" +
+            Versions.org_jetbrains_kotlin
+
+    const val kotlin_serialization: String = "org.jetbrains.kotlin:kotlin-serialization:" +
+            Versions.org_jetbrains_kotlin
+
+    /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_stdlib: String = "org.jetbrains.kotlin:kotlin-stdlib:" +
+            Versions.org_jetbrains_kotlin
+
+    /**
      * https://github.com/Kotlin/kotlinx.coroutines
      */
     const val kotlinx_coroutines_android: String =
@@ -26,12 +62,6 @@ object Libs {
     const val kotlinx_serialization_runtime: String =
             "org.jetbrains.kotlinx:kotlinx-serialization-runtime:" +
             Versions.org_jetbrains_kotlinx_kotlinx_serialization
-
-    /**
-     * https://developer.android.com/testing
-     */
-    const val androidx_test_ext_junit: String = "androidx.test.ext:junit:" +
-            Versions.androidx_test_ext_junit
 
     const val com_android_tools_build_gradle: String = "com.android.tools.build:gradle:" +
             Versions.com_android_tools_build_gradle
@@ -52,13 +82,17 @@ object Libs {
     const val appcompat: String = "androidx.appcompat:appcompat:" + Versions.appcompat
 
     /**
-     * http://developer.android.com/tools/extras/support-library.html
+     * https://developer.android.com/jetpack/androidx
      */
     const val core_ktx: String = "androidx.core:core-ktx:" + Versions.core_ktx
 
-    const val de_fayard_refreshversions_gradle_plugin: String =
-            "de.fayard.refreshVersions:de.fayard.refreshVersions.gradle.plugin:" +
-            Versions.de_fayard_refreshversions_gradle_plugin
+    const val de_fayard_buildsrcversions_gradle_plugin: String =
+            "de.fayard.buildSrcVersions:de.fayard.buildSrcVersions.gradle.plugin:" +
+            Versions.de_fayard_buildsrcversions_gradle_plugin
+
+    const val de_fayard_dependencies_gradle_plugin: String =
+            "de.fayard.dependencies:de.fayard.dependencies.gradle.plugin:" +
+            Versions.de_fayard_dependencies_gradle_plugin
 
     /**
      * https://developer.android.com/testing
@@ -73,30 +107,6 @@ object Libs {
             Versions.exifinterface
 
     /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_android_extensions: String =
-            "org.jetbrains.kotlin:kotlin-android-extensions:" + Versions.kotlin_android_extensions
-
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_android_extensions_runtime: String =
-            "org.jetbrains.kotlin:kotlin-android-extensions-runtime:" +
-            Versions.kotlin_android_extensions_runtime
-
-    const val kotlin_gradle_plugin: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:" +
-            Versions.kotlin_gradle_plugin
-
-    const val kotlin_serialization: String = "org.jetbrains.kotlin:kotlin-serialization:" +
-            Versions.kotlin_serialization
-
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_stdlib: String = "org.jetbrains.kotlin:kotlin-stdlib:" + Versions.kotlin_stdlib
-
-    /**
      * https://developer.android.com/studio
      */
     const val lint_gradle: String = "com.android.tools.lint:lint-gradle:" + Versions.lint_gradle
@@ -104,6 +114,11 @@ object Libs {
     const val org_jetbrains_kotlin_plugin_serialization_gradle_plugin: String =
             "org.jetbrains.kotlin.plugin.serialization:org.jetbrains.kotlin.plugin.serialization.gradle.plugin:" +
             Versions.org_jetbrains_kotlin_plugin_serialization_gradle_plugin
+
+    /**
+     * https://developer.android.com/jetpack/androidx
+     */
+    const val recyclerview: String = "androidx.recyclerview:recyclerview:" + Versions.recyclerview
 
     /**
      * https://github.com/JakeWharton/timber

@@ -39,33 +39,20 @@ tasks.withType<KotlinCompile> {
 }
 
 dependencies {
-    // implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
-    // implementation (kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
-    // implementation (Kotlin.stdlibJdk7)
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
+
     implementation (Libs.kotlin_stdlib)
     implementation (Libs.timber)
     implementation (Libs.appcompat)
     implementation (Libs.core_ktx)
+    implementation (Libs.viewpager2)
+    implementation (Libs.exifinterface)
+    implementation (Libs.kotlinx_coroutines_core)
+    implementation (Libs.kotlinx_coroutines_android)
+    implementation (Libs.kotlinx_serialization_runtime)
 
-    testImplementation (Libs.junit_junit)
-    androidTestImplementation (Libs.androidx_test_ext_junit)
-    androidTestImplementation (Libs.espresso_core)
-
-
-    /*
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.3.50")
-    implementation ("com.jakewharton.timber:timber:4.7.1")
-    implementation ("androidx.appcompat:appcompat:1.1.0")
-    implementation ("androidx.core:core-ktx:1.1.0")
-    implementation ("androidx.viewpager2:viewpager2:1.0.0-rc01")
-    implementation ("androidx.exifinterface:exifinterface:1.1.0-rc01")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2")
-    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.14.0-1.3.60-eap-76")
-
-    testImplementation ("junit:junit:4.12")
+    testImplementation ("junit:junit:4.13")
     androidTestImplementation ("androidx.test.ext:junit:1.1.1")
+    androidTestImplementation ("androidx.test.ext:junit-ktx:1.1.1")
     androidTestImplementation ("androidx.test.espresso:espresso-core:3.2.0")
-    */
-
 }
