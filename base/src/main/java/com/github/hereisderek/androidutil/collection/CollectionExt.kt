@@ -29,8 +29,7 @@ public inline fun <K, V, R, C : MutableCollection<in R>> Map<out K, V>.flatMapTo
     comparator: Comparator<in Map.Entry<K, V>>,
     transform: (Map.Entry<K, V>) -> Iterable<R>
 ): C {
-    val sortedEntries = this.entries.sortedWith(comparator)
-    entries.forEach {
+    this.entries.sortedWith(comparator).forEach {
         val obj = transform(it)
         destination.addAll(obj)
     }
@@ -102,3 +101,30 @@ inline fun <K, V, M : MutableMap<in K, in V>> Iterable<K>.associateWithNotNullTo
     return destination
 }
 
+
+
+/// ifNotEmptyOrNull and ifEmptyOrNull
+
+// Map
+public inline fun <C : Map<*, *>, R> C.ifNotEmptyOrNull(defaultValue: (objects: C) -> R) : R?
+        = if (this.isNotEmpty()) defaultValue.invoke(this) else null
+
+public inline fun <C : Map<*, *>, R> C.ifEmptyOrNull(defaultValue: (objects: C) -> R) : R?
+        = if (this.isEmpty()) defaultValue.invoke(this) else null
+
+
+// Collection
+public inline fun <C : Collection<*>, R> C.ifNotEmptyOrNull(defaultValue: (objects: C) -> R) : R?
+        = if (this.isNotEmpty()) defaultValue.invoke(this) else null
+
+public inline fun <C : Collection<*>, R> C.ifEmptyOrNull(defaultValue: (objects: C) -> R) : R?
+        = if (this.isEmpty()) defaultValue.invoke(this) else null
+
+// Array
+@Suppress("UPPER_BOUND_CANNOT_BE_ARRAY")
+public inline fun <C : Array<*>, R> C.ifNotEmptyOrNull(defaultValue: (objects: C) -> R) : R?
+        = if (this.isNotEmpty()) defaultValue.invoke(this) else null
+
+@Suppress("UPPER_BOUND_CANNOT_BE_ARRAY")
+public inline fun <C : Array<*>, R> C.ifEmptyOrNull(defaultValue: (objects: C) -> R) : R?
+        = if (this.isEmpty()) defaultValue.invoke(this) else null

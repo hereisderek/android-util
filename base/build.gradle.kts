@@ -12,12 +12,11 @@ plugins {
 
 // apply(from = "android.gradle")
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(30)
 
     defaultConfig {
         minSdkVersion(16)
-        targetSdkVersion(29)
-        targetSdkVersion(29)
+        targetSdkVersion(30)
         versionCode = 3
         versionName = "0.2.6"
 
@@ -39,12 +38,10 @@ tasks.withType<KotlinCompile> {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
     implementation (kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
-    // implementation (Kotlin.stdlibJdk7)
-    // implementation (Libs.kotlin_stdlib)
     implementation (Libs.timber)
     implementation (Libs.appcompat)
     implementation (Libs.core_ktx)
-    implementation (Libs.viewpager2)
+    implementation (Libs.androidx_viewpager2_viewpager2)
     implementation (Libs.exifinterface)
     implementation (Libs.kotlinx_coroutines_core)
     implementation (Libs.kotlinx_coroutines_android)
