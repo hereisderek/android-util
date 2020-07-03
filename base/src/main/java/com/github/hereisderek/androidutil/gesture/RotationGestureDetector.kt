@@ -17,7 +17,10 @@ import kotlin.math.sin
  */
 
 
-class RotationGestureDetector(private val mListener: OnRotationGestureListener?, private val mView: View? = null) {
+class RotationGestureDetector(
+    private val mListener: OnRotationGestureListener?,
+    private val mView: View? = null
+) {
     private val mFPoint = PointF()
     private val mSPoint = PointF()
     private var mPtrID1: Int = INVALID_POINTER_ID
@@ -29,6 +32,7 @@ class RotationGestureDetector(private val mListener: OnRotationGestureListener?,
 
 
 
+    @Suppress("NAME_SHADOWING")
     fun onTouchEvent(event: MotionEvent, view: View? = mView): Boolean {
         val view = checkNotNull(view ?: mView){
             "view is null, unable to calculate Raw Point"

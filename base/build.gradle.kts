@@ -41,7 +41,7 @@ dependencies {
     implementation (Libs.timber)
     implementation (Libs.appcompat)
     implementation (Libs.core_ktx)
-    implementation (Libs.androidx_viewpager2_viewpager2)
+    implementation (Libs.viewpager2)
     implementation (Libs.exifinterface)
     implementation (Libs.kotlinx_coroutines_core)
     implementation (Libs.kotlinx_coroutines_android)
