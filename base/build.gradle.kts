@@ -66,5 +66,6 @@ project.ext.apply {
 
 version = android.defaultConfig.versionName as String
 
-apply(from = "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle")
+// apply(from = "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle")
+// apply(from = "https://raw.githubusercontent.com/jokermonn/gradle-maven-plugin/master/gradle-mavenizer.gradle")
 

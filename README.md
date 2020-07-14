@@ -297,7 +297,7 @@ Just to close a `Closeable?` object quietly, pass along the exception to the han
 #### 10. CollectionExt.flatMap() with CollectionExtKtTest.flatMapTo(ArrayList<R>(), byKey, transform) and others
 
 
-```
+```kotlin
 val test = mapOf(
     1 to intArrayOf(1, 2, 3, 4),
     2 to intArrayOf(11, 12, 13, 14),
@@ -322,10 +322,10 @@ val result = test.flatMap(
 #### 11. DBHelperImpl
 
 
-### 12. DelegateRW<T>
+#### 12. DelegateRW<T>
 `DelegateRW<T>` is an interface that can be used as a delegate(`var variable by DelegateRW<T>`) provides four methods to enable read/write access and notify listeners when changes are made
 
-```
+```kotlin
 interface DelegateRW<T> {
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T
     operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T)
@@ -341,7 +341,7 @@ concrate implementations are as follows
 
 also with a helper method
 
-```
+```kotlin
 fun <T> delegateWR(
     lazyValue: () -> T,
     mode : LazyThreadSafetyMode = LazyThreadSafetyMode.NONE,
@@ -349,7 +349,7 @@ fun <T> delegateWR(
 ) : DelegateRW<T>
 ```
 
-```
+```kotlin
 fun <T> delegateWR(
     init: T,
     mode : LazyThreadSafetyMode = LazyThreadSafetyMode.NONE,
@@ -360,7 +360,7 @@ fun <T> delegateWR(
 }
 ```
 
-```
+```kotlin
 fun <V : View, T> V.onChangeViewInvalidate(
     init: T,
     mode : LazyThreadSafetyMode = LazyThreadSafetyMode.NONE,
@@ -371,7 +371,7 @@ fun <V : View, T> V.onChangeViewInvalidate(
 ```
 
 
-```
+```kotlin
 class CustomView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : View(context, attrs) {
