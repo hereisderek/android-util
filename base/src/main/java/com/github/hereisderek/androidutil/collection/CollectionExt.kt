@@ -106,25 +106,50 @@ inline fun <K, V, M : MutableMap<in K, in V>> Iterable<K>.associateWithNotNullTo
 /// ifNotEmptyOrNull and ifEmptyOrNull
 
 // Map
+/**
+ * invoke a function on the calling collection if it's not empty
+ */
 public inline fun <C : Map<*, *>, R> C.ifNotEmptyOrNull(defaultValue: (objects: C) -> R) : R?
         = if (this.isNotEmpty()) defaultValue.invoke(this) else null
 
+/**
+ * invoke a function on the calling collection if it's not empty
+ */
 public inline fun <C : Map<*, *>, R> C.ifEmptyOrNull(defaultValue: (objects: C) -> R) : R?
         = if (this.isEmpty()) defaultValue.invoke(this) else null
 
 
 // Collection
+/**
+ * invoke a function on the calling collection if it's not empty
+ */
 public inline fun <C : Collection<*>, R> C.ifNotEmptyOrNull(defaultValue: (objects: C) -> R) : R?
         = if (this.isNotEmpty()) defaultValue.invoke(this) else null
 
+/**
+ * invoke a function on the calling collection if it's not empty
+ */
 public inline fun <C : Collection<*>, R> C.ifEmptyOrNull(defaultValue: (objects: C) -> R) : R?
         = if (this.isEmpty()) defaultValue.invoke(this) else null
 
 // Array
+/**
+ * invoke a function on the calling collection if it's not empty
+ */
 @Suppress("UPPER_BOUND_CANNOT_BE_ARRAY")
 public inline fun <C : Array<*>, R> C.ifNotEmptyOrNull(defaultValue: (objects: C) -> R) : R?
         = if (this.isNotEmpty()) defaultValue.invoke(this) else null
 
+/**
+ * invoke a function on the calling collection if it's not empty
+ */
 @Suppress("UPPER_BOUND_CANNOT_BE_ARRAY")
 public inline fun <C : Array<*>, R> C.ifEmptyOrNull(defaultValue: (objects: C) -> R) : R?
         = if (this.isEmpty()) defaultValue.invoke(this) else null
+
+
+// List
+/**
+ * add the given @param obj to the MutableList if it doesn't already exist
+ */
+public fun <C> MutableList<C>.addIfNotContain(obj: C) = if (!contains(obj)) add(obj) else false
