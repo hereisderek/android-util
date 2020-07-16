@@ -20,13 +20,8 @@ import timber.log.Timber
 
 object ViewUtil {
     private lateinit var displayMetrics: DisplayMetrics
-    /* View */
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(value = [TypedValue.COMPLEX_UNIT_DIP, TypedValue.COMPLEX_UNIT_SP, TypedValue.COMPLEX_UNIT_PT,  TypedValue.COMPLEX_UNIT_IN, TypedValue.COMPLEX_UNIT_MM])
-    annotation class TypedValueUnit
 
-
-
+    @Deprecated("use DimenExt.kt instead", level = DeprecationLevel.WARNING)
     fun init(context: Context?) {
         displayMetrics = context?.resources?.displayMetrics ?: Resources.getSystem().displayMetrics
     }
@@ -36,24 +31,29 @@ object ViewUtil {
         displayMetrics
     }
 
+    @Deprecated("use DimenExt.kt instead", level = DeprecationLevel.WARNING)
     fun pxToDp(px: Float, context: Context? = null): Float {
         val metrics = getDisplayMetrics(context)
         return px / (metrics.densityDpi / 160f)
     }
 
+    @Deprecated("use DimenExt.kt instead", level = DeprecationLevel.WARNING)
     fun dpToPx(dp: Float, context: Context? = null) : Float {
         val metrics = getDisplayMetrics(context)
         return  (metrics.densityDpi / 160f) * dp
     }
 
+    @Deprecated("use DimenExt.kt instead", level = DeprecationLevel.WARNING)
     fun pixelsToSp(px: Float, context: Context? = null): Float {
         return px / getDisplayMetrics(context).scaledDensity
     }
 
+    @Deprecated("use DimenExt.kt instead", level = DeprecationLevel.WARNING)
     fun spToPixel(sp: Float, context: Context? = null) : Float {
         return getDisplayMetrics(context).scaledDensity * sp
     }
 
+    @Deprecated("use DimenExt.kt instead", level = DeprecationLevel.WARNING)
     fun applyDimension(@TypedValueUnit unit: Int, value: Float, context: Context? = null)
             = TypedValue.applyDimension(unit, value, getDisplayMetrics(context))
 

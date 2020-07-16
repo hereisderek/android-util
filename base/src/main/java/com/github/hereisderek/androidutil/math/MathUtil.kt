@@ -1,6 +1,7 @@
 package com.github.hereisderek.androidutil.math
 
 import java.util.*
+import kotlin.math.ceil
 import kotlin.math.pow
 import kotlin.math.sqrt
 import kotlin.math.max as kMax
@@ -13,6 +14,9 @@ import kotlin.math.min as kMin
  * Project: AndroidUtil
  */
 
+
+val Float.ceil : Int get() = ceil(this).toInt()
+val Double.ceil : Int get() = ceil(this).toInt()
 
 object MathUtil {
 
@@ -57,31 +61,6 @@ object MathUtil {
         return inRange(value, ranges.min() ?: return null, ranges.max() ?: return null)
     }
 
-
-
-
-    /*fun <T : Number> inRange(value : T, end1: T, end2: T) {
-        val min = min(end1, end2)
-        val max = max(end1, end2)
-        return min()
-    }
-
-    fun <T : Number> min(a: T, b: T) : T{
-        return when(a) {
-            is Int -> calculate(a, b) {
-                kMin(a as Int, b as Int) as Int
-            }
-            is Float -> min(a as Float, b as Float)
-            else -> min(a, b)
-        } as T
-    }
-
-    fun <T : Number> calculate(a:T, b:T, action: (a:T, b:T) -> T) : T {
-        when(a) {
-            is Int -> action.invoke(a, b)
-            else
-        }
-    }*/
 
     val max_int : (a: Int, b: Int) -> Int = { a, b -> kMax(a, b) }
 
