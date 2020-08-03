@@ -32,7 +32,7 @@ fun DisplayMetrics.convert(
 }
 
 fun View.convert(
-    sourceUnit: Int,
+    @TypedValueUnit sourceUnit: Int,
     value: Float,
     targetUnit: Int = TypedValue.COMPLEX_UNIT_PX
 ) : Float = displayMetrics.convert(sourceUnit, value, targetUnit)

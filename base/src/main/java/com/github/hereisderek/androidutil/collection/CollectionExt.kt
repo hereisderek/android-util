@@ -192,7 +192,9 @@ public fun <T> SparseArray<out T>.joinToString(
     postfix: CharSequence = "",
     limit: Int = -1,
     truncated: CharSequence = "...",
-    transform: ((value: T, index: Int, key: Int) -> CharSequence)? = null
+    transform: ((value: T, index: Int, key: Int) -> CharSequence)? = { value, index, key ->
+        "$index:$key:$value"
+    }
 ): String {
     val buffer = StringBuilder(prefix)
     val end = if (limit == -1) size() else min(limit, size())
