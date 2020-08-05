@@ -297,7 +297,7 @@ Just to close a `Closeable?` object quietly, pass along the exception to the han
 #### 10. CollectionExt.flatMap() with CollectionExtKtTest.flatMapTo(ArrayList<R>(), byKey, transform) and others
 
 
-```
+```kotlin
 val test = mapOf(
     1 to intArrayOf(1, 2, 3, 4),
     2 to intArrayOf(11, 12, 13, 14),
@@ -320,3 +320,73 @@ val result = test.flatMap(
 
 
 #### 11. DBHelperImpl
+
+
+#### 12. DelegateRW<T>
+`DelegateRW<T>` is an interface that can be used as a delegate(`var variable by DelegateRW<T>`) provides four methods to enable read/write access and notify listeners when changes are made
+
+```kotlin
+interface DelegateRW<T> {
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): T
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T)
+    operator fun plusAssign(onChangeListener: OnChangedListener<T>)
+    fun subscribe(onChangeListener: OnChangedListener<T>) = this.also { this += onChangeListener }
+}
+```
+
+concrate implementations are as follows
+
+* DelegateRWUnSafe<T> (and it's threadsafe version: DelegateRWSafe<T>)
+* DelegateLazyRW<T> (and it's threadsafe version: DelegateLazyRWSafe<T>)
+
+also with a helper method
+
+```kotlin
+fun <T> delegateWR(
+    lazyValue: () -> T,
+    mode : LazyThreadSafetyMode = LazyThreadSafetyMode.NONE,
+    vararg onChangeListener: OnChangedListener<T>
+) : DelegateRW<T>
+```
+
+```kotlin
+fun <T> delegateWR(
+    init: T,
+    mode : LazyThreadSafetyMode = LazyThreadSafetyMode.NONE,
+    onChangeListener: OnChangedListener<T>? = null
+) = when(mode) {
+    LazyThreadSafetyMode.SYNCHRONIZED -> DelegateRWSafe(init, onChangeListener)
+    else -> DelegateRWUnSafe(init, onChangeListener)
+}
+```
+
+```kotlin
+fun <V : View, T> V.onChangeViewInvalidate(
+    init: T,
+    mode : LazyThreadSafetyMode = LazyThreadSafetyMode.NONE,
+    onChangeListener: OnChangedListener<T>? = null
+) : DelegateRW<T> = delegateWR(init, mode, onChangeListener).apply {
+    subscribe { _, _ -> invalidate() }
+}
+```
+
+
+```kotlin
+class CustomView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null
+) : View(context, attrs) {
+    // whenever changed, it will also trigger view invalidation
+    var size: Int by this.onChangeViewInvalidate(10).also {
+        it.subscribe { old, new ->
+            // you can also add extra layer of listener for value changes
+            println("size value changed from:$old to:$new")
+        }
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+
+        // use the value of size for drawing...
+    }
+}
+```

@@ -24,7 +24,7 @@ inline fun <reified T> readGradleProperty(name: String, noinline lazyValue: (()-
 
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(30)
 
     defaultConfig {
         minSdkVersion(readGradleProperty<Int>("android.minSdkVersion"){16}!!)
@@ -65,6 +65,15 @@ android {
         exclude("**/*.properties")
     }
 
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
+    androidExtensions {
+        isExperimental = true
+    }
+
 }
 
 
@@ -74,8 +83,8 @@ tasks.withType<KotlinCompile> {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
-
-    implementation (Libs.kotlin_stdlib)
+    implementation (kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
+    // implementation (Libs.kotlin_stdlib)
     implementation (Libs.timber)
     implementation (Libs.appcompat)
     implementation (Libs.core_ktx)
@@ -105,5 +114,6 @@ project.ext.apply {
 
 version = android.defaultConfig.versionName as String
 
-apply(from = "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle")
+// apply(from = "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle")
+apply(from = "https://raw.githubusercontent.com/jokermonn/gradle-maven-plugin/master/gradle-mavenizer.gradle")
 

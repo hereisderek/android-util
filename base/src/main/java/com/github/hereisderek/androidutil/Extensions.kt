@@ -3,6 +3,7 @@ package com.github.hereisderek.androidutil
 import android.database.sqlite.SQLiteDatabase
 import timber.log.Timber
 import java.io.Closeable
+import kotlin.math.ceil
 
 /**
  *

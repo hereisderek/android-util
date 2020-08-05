@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Looper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.util.function.BiPredicate
 
 /**
  *
@@ -155,3 +156,4 @@ inline class TimedResult<T>(val timedResult: Pair<Long, T>) {
 }
 
 fun getPackageName(context: Context) : String = context.packageName
+
