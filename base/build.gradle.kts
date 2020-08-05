@@ -29,6 +29,16 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
+
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
+    androidExtensions {
+        isExperimental = true
+    }
 }
 
 tasks.withType<KotlinCompile> {
