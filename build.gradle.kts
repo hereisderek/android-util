@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.config.KotlinCompilerVersion
 plugins {
     id("de.fayard.buildSrcVersions") version "0.7.0"
     id("de.fayard.dependencies") version "0.5.6"
-    kotlin("plugin.serialization") version "1.3.61"
+    kotlin("plugin.serialization") version "1.3.72"
 }
 
 
@@ -17,7 +17,7 @@ buildscript {
     }
 
     dependencies {
-        classpath ("com.android.tools.build:gradle:4.0.0-beta01")
+        classpath ("com.android.tools.build:gradle:4.2.0-alpha07")
         classpath(Libs.kotlin_serialization)
         classpath(Libs.kotlin_gradle_plugin)
     }

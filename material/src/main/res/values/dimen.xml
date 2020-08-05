@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+
+    <!-- corner radius -->
+    <dimen name="corner_radius_zero">0dp</dimen>
+    <dimen name="corner_radius_small">8dp</dimen>
+    <dimen name="corner_radius_normal">16dp</dimen>
+    <dimen name="corner_radius_big">32dp</dimen>
+    <dimen name="corner_radius_large">64dp</dimen>
+
+
+
+
+</resources>

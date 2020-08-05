@@ -7,6 +7,27 @@ import kotlin.String
  *   `$ ./gradlew buildSrcVersions`
  */
 object Libs {
+    const val databinding_adapters: String = "androidx.databinding:databinding-adapters:" +
+            Versions.androidx_databinding
+
+    /**
+     * https://developer.android.com/studio
+     */
+    const val databinding_common: String = "androidx.databinding:databinding-common:" +
+            Versions.androidx_databinding
+
+    /**
+     * https://developer.android.com/studio
+     */
+    const val databinding_compiler: String = "androidx.databinding:databinding-compiler:" +
+            Versions.androidx_databinding
+
+    const val databinding_runtime: String = "androidx.databinding:databinding-runtime:" +
+            Versions.androidx_databinding
+
+    const val viewbinding: String = "androidx.databinding:viewbinding:" +
+            Versions.androidx_databinding
+
     /**
      * https://developer.android.com/testing
      */
@@ -44,6 +65,12 @@ object Libs {
             Versions.org_jetbrains_kotlin
 
     /**
+     * https://kotlinlang.org/
+     */
+    const val kotlin_stdlib_jdk8: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" +
+            Versions.org_jetbrains_kotlin
+
+    /**
      * https://github.com/Kotlin/kotlinx.coroutines
      */
     const val kotlinx_coroutines_android: String =
@@ -70,11 +97,6 @@ object Libs {
      * http://junit.org
      */
     const val junit_junit: String = "junit:junit:" + Versions.junit_junit
-
-    /**
-     * https://developer.android.com/studio
-     */
-    const val aapt2: String = "com.android.tools.build:aapt2:" + Versions.aapt2
 
     /**
      * https://developer.android.com/jetpack/androidx
@@ -110,6 +132,11 @@ object Libs {
      * https://developer.android.com/studio
      */
     const val lint_gradle: String = "com.android.tools.lint:lint-gradle:" + Versions.lint_gradle
+
+    /**
+     * https://github.com/material-components/material-components-android
+     */
+    const val material: String = "com.google.android.material:material:" + Versions.material
 
     const val org_jetbrains_kotlin_plugin_serialization_gradle_plugin: String =
             "org.jetbrains.kotlin.plugin.serialization:org.jetbrains.kotlin.plugin.serialization.gradle.plugin:" +

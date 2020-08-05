@@ -1,7 +1,7 @@
 rootProject.name = "android-util"
 
 include(
-    ":app", ":base", ":recyclerview"
+    ":app", ":base", ":recyclerview", ":material"
 )
 
 // project(":base").projectDir = File(rootDir, "base")
