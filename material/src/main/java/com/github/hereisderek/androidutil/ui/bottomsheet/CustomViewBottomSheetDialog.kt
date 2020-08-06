@@ -7,17 +7,16 @@ import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-
+/*
 abstract class CustomViewBottomSheetDialog<T : ViewBinding>(
 ) : BottomSheetDialogFragment() {
 
-    com.android.tools.build:gradle
-    /*var customViewBinding : T = customViewBinding; set(value) {
+    *//*var customViewBinding : T = customViewBinding; set(value) {
         if (field != value) {
             field = value
             view?.requestLayout()
         }
-    }*/
+    }*//*
 
 
 
@@ -36,4 +35,4 @@ abstract class CustomViewBottomSheetDialog<T : ViewBinding>(
     }
 
 
-}
+}*/
