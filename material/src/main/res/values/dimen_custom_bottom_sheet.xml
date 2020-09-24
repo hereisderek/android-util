@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- custom bottom sheet -->
+<resources>
+    <dimen name="custom_bottom_sheet_corner_top_left">@dimen/corner_radius_normal</dimen>
+    <dimen name="custom_bottom_sheet_corner_top_right">@dimen/corner_radius_normal</dimen>
+    <dimen name="custom_bottom_sheet_corner_bottom_left">@dimen/corner_radius_zero</dimen>
+    <dimen name="custom_bottom_sheet_corner_bottom_right">@dimen/corner_radius_zero</dimen>
+</resources>

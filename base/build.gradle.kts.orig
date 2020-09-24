@@ -74,11 +74,15 @@ android {
     androidExtensions {
         isExperimental = true
     }
+<<<<<<< HEAD
     testOptions {
         unitTests.all {
             it.useJUnitPlatform()
         }
     }
+=======
+
+>>>>>>> 0cf5a5afb8d13d3b0adef357152e1ca703c9cf1b
 }
 
 
@@ -100,10 +104,15 @@ dependencies {
     implementation (Libs.kotlinx_serialization_runtime)
     implementation (Libs.kotlin_android_extensions_runtime)
 
+<<<<<<< HEAD
     testImplementation (Libs.junit_jupiter_api)
     testImplementation (Libs.junit_jupiter_params)
     testRuntimeOnly (Libs.junit_jupiter_engine)
     // testImplementation (Libs.junit_junit)
+=======
+    testImplementation (Libs.junit_junit)
+    androidTestImplementation (Libs.junit_ktx)
+>>>>>>> 0cf5a5afb8d13d3b0adef357152e1ca703c9cf1b
     androidTestImplementation (Libs.androidx_test_ext_junit)
     androidTestImplementation (Libs.espresso_core)
 }

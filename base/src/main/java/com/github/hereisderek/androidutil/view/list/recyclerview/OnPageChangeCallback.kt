@@ -19,6 +19,7 @@ import androidx.viewpager2.widget.ViewPager2
  */
 open class OnPageChangeCallback : ViewPager2.OnPageChangeCallback() {
     private var previousPosition = -1
+
     override fun onPageScrollStateChanged(state: Int) {
         super.onPageScrollStateChanged(state)
     }

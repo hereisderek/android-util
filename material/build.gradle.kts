@@ -1,14 +1,13 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.config.KotlinCompilerVersion
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-
 
 plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
-    // kotlin("de.mannodermaus.android-junit5")
 }
+
+@Suppress("unchecked_cast", "nothing_to_inline")
+inline fun <T> uncheckedCast(target: Any?): T = target as T
+
 
 inline fun <reified T> readGradleProperty(name: String, noinline lazyValue: (()->T?)? = null) : T? {
     val value = findProperty(name) ?: return lazyValue?.invoke()
@@ -25,10 +24,10 @@ inline fun <reified T> readGradleProperty(name: String, noinline lazyValue: (()-
 
 
 android {
-    compileSdkVersion(30)
+    compileSdkVersion(29)
 
     defaultConfig {
-        minSdkVersion(readGradleProperty<Int>("android.minSdkVersion"){16}!!)
+        minSdkVersion(readGradleProperty<Int>("android.minSdkVersion"){22}!!)
         targetSdkVersion(readGradleProperty<Int>("android.targetSdkVersion"){29}!!)
 
         versionCode = readGradleProperty<Int>("android.versionCode")!!
@@ -74,53 +73,23 @@ android {
     androidExtensions {
         isExperimental = true
     }
-    testOptions {
-        unitTests.all {
-            it.useJUnitPlatform()
-        }
-    }
+
 }
 
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
-}
+
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
-    implementation (kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
-    // implementation (Libs.kotlin_stdlib)
+    implementation (Libs.kotlin_stdlib)
     implementation (Libs.timber)
     implementation (Libs.appcompat)
     implementation (Libs.core_ktx)
-    implementation (Libs.viewpager2)
-    implementation (Libs.exifinterface)
-    implementation (Libs.kotlinx_coroutines_core)
-    implementation (Libs.kotlinx_coroutines_android)
-    implementation (Libs.kotlinx_serialization_runtime)
-    implementation (Libs.kotlin_android_extensions_runtime)
+    implementation ("com.google.android.material:material:1.3.0-alpha02")
+    implementation (project(":base"))
 
-    testImplementation (Libs.junit_jupiter_api)
-    testImplementation (Libs.junit_jupiter_params)
-    testRuntimeOnly (Libs.junit_jupiter_engine)
-    // testImplementation (Libs.junit_junit)
-    androidTestImplementation (Libs.androidx_test_ext_junit)
-    androidTestImplementation (Libs.espresso_core)
+    testImplementation ("junit:junit:4.13")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.1")
+    androidTestImplementation ("androidx.test.ext:junit-ktx:1.1.1")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.2.0")
 }
-
-project.ext.apply {
-    val mavSiteUrl = "https://github.com/hereisderek/android-util"
-    set("mavSiteUrl", mavSiteUrl)
-    set("mavGitUrl", "$mavSiteUrl.git")
-    set("mavProjectName", "android-util")
-    set("mavPublishToMavenLocal", true)
-    set("mavLibraryLicenses", mapOf("Apache-2.0" to "http://www.apache.org/licenses/LICENSE-2.0.txt"))
-    set("mavLibraryDescription", "A collection of android utilities")
-}
-
-
-version = android.defaultConfig.versionName as String
-
-// apply(from = "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle")
-apply(from = "https://raw.githubusercontent.com/jokermonn/gradle-maven-plugin/master/gradle-mavenizer.gradle")
-
