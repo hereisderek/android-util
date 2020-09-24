@@ -83,7 +83,7 @@ open class SingleFragmentActivity : AppCompatActivity() {
 
 
     override fun getTheme(): Resources.Theme = super.getTheme().apply {
-        themeId.ifNotThen(-1) {
+        themeId.ifNotEqualThen(-1) {
             applyStyle(it, true)
         }
     }
