@@ -10,4 +10,4 @@ package com.github.hereisderek.androidutil.misc
  */
 
 
-public const val EMPTY_STRING = ""
+

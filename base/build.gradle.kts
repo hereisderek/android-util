@@ -7,6 +7,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    // kotlin("de.mannodermaus.android-junit5")
 }
 
 
@@ -39,6 +40,11 @@ android {
     androidExtensions {
         isExperimental = true
     }
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 tasks.withType<KotlinCompile> {
@@ -58,7 +64,10 @@ dependencies {
     implementation (Libs.kotlin_android_extensions_runtime)
     implementation (Libs.kotlinx_serialization_runtime)
 
-    testImplementation (Libs.junit_junit)
+    testImplementation (Libs.junit_jupiter_api)
+    testImplementation (Libs.junit_jupiter_params)
+    testRuntimeOnly (Libs.junit_jupiter_engine)
+    // testImplementation (Libs.junit_junit)
     androidTestImplementation (Libs.androidx_test_ext_junit)
     androidTestImplementation (Libs.espresso_core)
 }
@@ -77,5 +86,5 @@ project.ext.apply {
 version = android.defaultConfig.versionName as String
 
 // apply(from = "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle")
-// apply(from = "https://raw.githubusercontent.com/jokermonn/gradle-maven-plugin/master/gradle-mavenizer.gradle")
+apply(from = "https://raw.githubusercontent.com/jokermonn/gradle-maven-plugin/master/gradle-mavenizer.gradle")
 

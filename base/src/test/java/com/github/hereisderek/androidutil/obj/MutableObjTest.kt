@@ -1,7 +1,5 @@
 package com.github.hereisderek.androidutil.obj
 
-import org.junit.Assert.*
-import org.junit.Test
 
 /**
  * User: derekzhu
@@ -11,12 +9,5 @@ import org.junit.Test
 
 
 class MutableObjTest {
-    @Test
-    fun test(){
-        val a by MutableObj<String>{
-            ""
-        }
 
-
-    }
 }

@@ -1,15 +1,11 @@
 package com.github.hereisderek.androidutil.fragment
 
-import android.app.Activity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import com.github.hereisderek.androidutil.fragment.FragUtil.fragProvider
-import com.github.hereisderek.androidutil.javaClass
 import timber.log.Timber
 
 object FragUtil {
