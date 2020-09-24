@@ -9,7 +9,7 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.github.hereisderek.androidutil.ext.ifNotThen
+import com.github.hereisderek.androidutil.ext.ifNotEqualThen
 import timber.log.Timber
 
 

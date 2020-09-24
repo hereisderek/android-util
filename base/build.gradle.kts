@@ -95,6 +95,8 @@ dependencies {
     implementation (Libs.core_ktx)
     implementation (Libs.viewpager2)
     implementation (Libs.exifinterface)
+    implementation (Libs.lifecycle_viewmodel_ktx)
+
     implementation (Libs.kotlinx_coroutines_core)
     implementation (Libs.kotlinx_coroutines_android)
     implementation (Libs.kotlinx_serialization_runtime)
